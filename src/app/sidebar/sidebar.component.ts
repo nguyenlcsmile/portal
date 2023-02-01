@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-sidebar',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class SidebarComponent implements OnInit {
+    statusElementSidebar: any = {
+        'monitor-page': '',
+        'customer-page': ''
+    };
 
-    constructor() { }
+    constructor(
+        private router: Router,
+    ) {}
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
+    ngDoCheck() {
+        let currentUrlName = this.router.url;
+        // console.log(">>>Check currentname:", currentUrlName);
+        this.statusElementSidebar = {
+            'monitor-page': '',
+            'customer-page': ''
+        }
+        Object.keys(this.statusElementSidebar).map(keyName => {
+            let key = currentUrlName.replace('/', '');
+            if (keyName === key) this.statusElementSidebar[key] = 'active';
+        })
+        // console.log(">>>Check status sidebar:", this.statusElementSidebar);
+    }
+    
 }
