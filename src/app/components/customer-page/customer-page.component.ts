@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 
 export class CustomerPageComponent implements OnInit {
-    public currentPage: any = 5;
+    public currentPage: any = 1;
     public listURLCustomerPage: any = {
         'detail': false,
         'card': false

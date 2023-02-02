@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-// import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +30,7 @@ import { CustomerPageComponent } from './components/customer-page/customer-page.
         BrowserModule,
         AppRoutingModule,
         FormsModule,
-        // NgbPaginationModule
+        NgbModule
     ],
     providers: [],
     bootstrap: [AppComponent]
