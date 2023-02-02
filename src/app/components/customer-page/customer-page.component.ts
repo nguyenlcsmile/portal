@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 
 export class CustomerPageComponent implements OnInit {
+    public currentPage: any = 5;
     public listURLCustomerPage: any = {
         'detail': false,
         'card': false
@@ -29,7 +30,7 @@ export class CustomerPageComponent implements OnInit {
         { id: 'typical_high', name: 'Typical High Risk' },
         { id: 'default_high', name: 'Default High Risk' },
         { id: 'low', name: 'Low Risk' },
-        { id: 'N/A', name: 'Not Available'}
+        { id: 'N/A', name: 'Not Available' }
     ];
     // Variable statusRisk box: End
 
@@ -89,11 +90,11 @@ export class CustomerPageComponent implements OnInit {
 
     constructor(
         private router: Router,
-    ) {}
+    ) { }
 
-    ngOnInit(): void {}
-    
-    ngAfterViewInit() {}
+    ngOnInit(): void { }
+
+    ngAfterViewInit() { }
 
     ngDoCheck() {
         // console.log(">>>Check status:", this.status);

@@ -22,7 +22,7 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    // console.log(">>>Check respone:", response);
+    console.log(">>>Check respone:", response);
     // return response && response.data ? response.data : response;
     return response;
 }, function (error) {
