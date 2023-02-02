@@ -18,18 +18,30 @@
 									<form>
 										<div class="mb-3">
 											<label class="form-label">Username</label>
-											<input class="form-control form-control-lg" type="text" name="text" placeholder="Enter your username">
+											<input class="form-control form-control-lg {{account.username.valid ? 'is-invalid' : ''}}" 
+												type="text" name="text" placeholder="Enter your username" 
+												[(ngModel)]="account.username.value">
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Password</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password">
+											<div class="input-group mb-3">
+												<input class="form-control form-control-lg {{account.password.valid ? 'is-invalid' : ''}}" 
+													type="{{!account.showPassword ? 'password' : 'text'}}" name="password" 
+													placeholder="Enter your password" [(ngModel)]="account.password.value">
+												<span class="input-group-text" style="cursor: pointer;">
+													<i class="align-middle fas fa-fw {{account.showPassword ? 'fa-eye' : 'fa-eye-slash'}}"
+														(click)="handleShowPassword()"></i>
+												</span>
+											</div>
 											<small>
 												<a href="/">Forgot password?</a>
                                                 <!-- routerLink="/forgot-password-page" -->
 											</small>
 										</div>
 										<div class="text-center mt-3">
-											<button type="submit" class="btn btn-lg btn-primary col-md-4">Sign in</button>
+											<button type="submit" class="btn btn-lg btn-primary col-md-4" (click)="handleLoginPage()">
+												Login
+											</button>
 										</div>
 									</form>
 								</div>

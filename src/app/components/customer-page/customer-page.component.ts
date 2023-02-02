@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { postAccessToken } from 'src/_services/apiService.service';
 
 @Component({
     selector: 'app-customer-page',
@@ -94,16 +93,14 @@ export class CustomerPageComponent implements OnInit {
 
     ngOnInit(): void {}
     
-    ngAfterViewInit() {
-        let res = this.postLogin('nguyencaole', 'Caolenguyencln@1');
-        console.log(">>>Check res:", res);
-    }
+    ngAfterViewInit() {}
 
     ngDoCheck() {
         // console.log(">>>Check status:", this.status);
         this.checkRouter();
     }
 
+    // Check status content for page customer: start
     checkRouter() {
         let currentUrlName = this.router.url;
         this.listURLCustomerPage = {
@@ -116,9 +113,5 @@ export class CustomerPageComponent implements OnInit {
         })
         // console.log(">>>Check URL Customer:", this.listURLCustomerPage);
     }
-
-    async postLogin(username: string, password: string) {
-        let res = await postAccessToken(username, password);
-        return res;
-    }
+    // Check status content for page customer: end
 }
