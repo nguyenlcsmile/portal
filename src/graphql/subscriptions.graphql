@@ -1,0 +1,7 @@
+# this is an auto generated file. This will be overwritten
+subscription SubscribeToNewMessage($filter: ModelSubscriptionTodoFilterInput) {
+  subscribeToNewMessage(filter: $filter) {
+    value
+    datetime
+  }
+}

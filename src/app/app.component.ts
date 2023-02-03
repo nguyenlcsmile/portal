@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Amplify } from "@aws-amplify/core";
+import configAppSync from '../aws-exports';
+
+Amplify.configure(configAppSync);
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
     public title: string = 'DemoPortalV2';
 

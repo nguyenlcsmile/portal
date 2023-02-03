@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+// import { APIService } from 'src/app/API.service';
 
 @Component({
     selector: 'app-monitor-page',
     templateUrl: './monitor-page.component.html',
     styleUrls: ['./monitor-page.component.scss']
 })
+
 export class MonitorPageComponent implements OnInit {
 
     // Variable for box system error: Start
@@ -210,8 +212,17 @@ export class MonitorPageComponent implements OnInit {
     ];
     // Variable for box system error: End
 
-    constructor() { }
+    constructor(
+        // private apiAppSync: APIService,
+    ) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        // sub data from appSync
+        // this.apiAppSync.SubscribeToNewMessageListener().subscribe({
+        //     next: async (data) => {
+        //         console.log(">>>Check:", data);
+        //     }
+        // })
+    }
 
 }
