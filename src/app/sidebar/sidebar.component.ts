@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
             'customer-page': ''
         }
         Object.keys(this.statusElementSidebar).map(keyName => {
-            let key = currentUrlName.split('/')[1];
+            let key = currentUrlName.split('/').slice(-1)[0];
             if (keyName === key) this.statusElementSidebar[key] = 'active';
         })
         // console.log(">>>Check status sidebar:", this.statusElementSidebar);

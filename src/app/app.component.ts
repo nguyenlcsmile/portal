@@ -10,7 +10,7 @@ export class AppComponent {
     public title: string = 'DemoPortalV2';
 
     public isLogin: any;
-    public isForgotPassword: any;
+    public isForgotPassword: any = false;
 
     constructor(
         private router: Router
@@ -18,7 +18,7 @@ export class AppComponent {
 
     ngOnInit(): void {
         this.checkLoginPage();
-        this.checkForgotPassword();
+        // this.checkForgotPassword();
     }
 
     checkLoginPage() {
@@ -35,13 +35,17 @@ export class AppComponent {
         // console.log(">>>Check isLogin:", this.isLogin);
     }
 
-    checkForgotPassword() {
-        let isForgotPassword = localStorage.getItem('isForgotPassword');
-        if (isForgotPassword === JSON.stringify('true')) {
-            this.isForgotPassword = true;
-            this.router.navigate(['v2/forgot-password-page']);
-        } else {
-            this.isForgotPassword = false;
-        }
-    }
+    // checkForgotPassword() {
+    //     let isForgotPassword = localStorage.getItem('isForgotPassword');
+    //     if (isForgotPassword === JSON.stringify('true')) {
+    //         this.isForgotPassword = true;
+    //         this.router.navigate(['v2/forgot-password-page']);
+    //     } else {
+    //         this.isForgotPassword = false;
+    //     }
+    // }
+
+    // clearLocalStorage() {
+    //     localStorage.removeItem('isForgotPassword');
+    // }
 }

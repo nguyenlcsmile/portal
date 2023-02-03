@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { postAccessToken } from './login-page.service';
 import { Router } from '@angular/router';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @Component({
     selector: 'app-login-page',
@@ -8,6 +9,16 @@ import { Router } from '@angular/router';
     styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
+    // Variable for loading page: Start
+    public loading: any = false;
+    public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+    public primaryColour = '#FFD700';
+    public config = {
+        animationType: ngxLoadingAnimationTypes.none,
+        backdropBorderRadius: '3px',
+    };
+    // Variable for loading page: End
+    
     public account: any = {
         username: {
             valid: false,
@@ -28,6 +39,8 @@ export class LoginPageComponent implements OnInit {
     ngOnInit(): void {
         // Remove access_token
         localStorage.removeItem('access_token');
+        // Remove isForgotPassword
+        localStorage.removeItem('isForgotPassword');
     }
 
     // Call api get Token for login Portal: Start
@@ -42,8 +55,9 @@ export class LoginPageComponent implements OnInit {
 
         // post Token
         let res = await postAccessToken(this.account.username.value, this.account.password.value);
-        console.log(">>>Check res:", res);
+        // console.log(">>>Check res:", res);
         if (res && res['status'] === 200) {
+            this.loading = true;
             let access_token = res['data']['data']['AccessToken']
             localStorage.setItem('access_token', JSON.stringify(access_token));
             localStorage.setItem('isLogin', JSON.stringify('true'));
@@ -59,8 +73,8 @@ export class LoginPageComponent implements OnInit {
         this.account.showPassword = !this.account.showPassword;
     }
 
-    handleForgotPassword() {
-        localStorage.setItem('isForgotPassword', JSON.stringify('true'));
-        location.reload();
-    }
+    // handleForgotPassword() {
+    //     localStorage.setItem('isForgotPassword', JSON.stringify('true'));
+    //     location.reload();
+    // }
 }

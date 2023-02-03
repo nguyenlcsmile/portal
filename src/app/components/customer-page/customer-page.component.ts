@@ -115,4 +115,10 @@ export class CustomerPageComponent implements OnInit {
         // console.log(">>>Check URL Customer:", this.listURLCustomerPage);
     }
     // Check status content for page customer: end
+
+    // View detail customer: Start
+    viewCustomerDetail() {
+        this.router.navigate(['v2/customer-page/detail']);
+    }
+    // View detail customer: End
 }
