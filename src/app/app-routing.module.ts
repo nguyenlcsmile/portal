@@ -8,16 +8,16 @@ import { CustomerDetailPageComponent } from './components/customer-page/detail-p
 import { CustomerPageComponent } from './components/customer-page/customer-page.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home-page', pathMatch: 'full' },
-    { path: 'login-page', component: LoginPageComponent },
-    { path: 'forgot-password-page', component: ForgotPasswordPageComponent },
-    { path: 'home-page', component: HomePageComponent },
-    { path: 'monitor-page', component: MonitorPageComponent },
+    { path: '', redirectTo: 'v2/home-page', pathMatch: 'full' },
+    { path: 'v2/login-page', component: LoginPageComponent },
+    { path: 'v2/forgot-password-page', component: ForgotPasswordPageComponent },
+    { path: 'v2/home-page', component: HomePageComponent },
+    { path: 'v2/monitor-page', component: MonitorPageComponent },
     {
-        path: 'customer-page', component: CustomerPageComponent,
+        path: 'v2/customer-page', component: CustomerPageComponent,
         children: [
-            { path: '', redirectTo: 'customer-page', pathMatch: 'full' },
-            { path: 'detail', component: CustomerDetailPageComponent }
+            { path: '', redirectTo: 'v2/customer-page', pathMatch: 'full' },
+            { path: 'v2/detail', component: CustomerDetailPageComponent }
         ]
     },
 ];

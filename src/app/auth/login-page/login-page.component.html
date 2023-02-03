@@ -33,15 +33,14 @@
 														(click)="handleShowPassword()"></i>
 												</span>
 											</div>
-											<small>
-												<a href="/">Forgot password?</a>
-                                                <!-- routerLink="/forgot-password-page" -->
-											</small>
+											<a class="forgot-password" (click)="handleForgotPassword()">Forgot password?</a>
 										</div>
 										<div class="text-center mt-3">
 											<button type="submit" class="btn btn-lg btn-primary col-md-4" (click)="handleLoginPage()">
-												Login
+												Sign in
 											</button>
+											<p class="text-center mt-4">Need an account? <a href="/">Sign up</a></p>
+											<p class="text-center mt-4 text-danger">{{errorLogin}}</p>
 										</div>
 									</form>
 								</div>

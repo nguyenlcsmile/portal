@@ -17,7 +17,12 @@
 
     <!-- Login page: Start -->
     <div *ngIf="isLogin === false" class="main">
-        <app-login-page></app-login-page>
+        <div *ngIf="isForgotPassword === false">
+            <app-login-page></app-login-page>
+        </div>
+        <div *ngIf="isForgotPassword === true">
+            <app-forgot-password-page></app-forgot-password-page>
+        </div>
     </div>
     <!-- Login page: End -->
 </div>

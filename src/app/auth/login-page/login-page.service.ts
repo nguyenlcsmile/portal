@@ -5,8 +5,14 @@ const postAccessToken = (username: string, password: string) => {
         Username: username,
         Password: password
     })
-    .then(res => res)
-    .catch((error) => error)
+    .then(res => {
+        // console.log(">>>Check error:", res);
+        return res;
+    })
+    .catch((error) => {
+        // console.log(">>>Check error:", error);
+        return error;
+    })
 }
 
 export { postAccessToken }
