@@ -32,7 +32,7 @@ export class AppComponent {
         // console.log(">>>Check:", isLoginPage === JSON.stringify("true"));
         if (isLoginPage === JSON.stringify('true') && access_token) {
             this.isLogin = true;
-            this.router.navigate(['v2/monitor-page']);
+            this.router.navigate(['v2/customer-page/detail']);
         } else {
             this.isLogin = false;
             this.router.navigate(['v2/login-page']);

@@ -213,7 +213,7 @@ export class MonitorPageComponent implements OnInit {
     // Variable for box system error: End
 
     constructor(
-        // private apiAppSync: APIService,
+        // private apiAppSync: APIService
     ) { }
 
     ngOnInit(): void {
