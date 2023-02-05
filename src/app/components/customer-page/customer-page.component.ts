@@ -106,7 +106,6 @@ export class CustomerPageComponent implements OnInit {
         let currentUrlName = this.router.url;
         this.listURLCustomerPage = {
             'detail': false,
-            'card': false
         };
         Object.keys(this.listURLCustomerPage).map(keyName => {
             let key = currentUrlName.split('/').slice(-1)[0];

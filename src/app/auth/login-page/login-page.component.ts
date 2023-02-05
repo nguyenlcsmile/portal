@@ -18,7 +18,7 @@ export class LoginPageComponent implements OnInit {
         backdropBorderRadius: '3px',
     };
     // Variable for loading page: End
-    
+
     public account: any = {
         username: {
             valid: false,
@@ -34,13 +34,15 @@ export class LoginPageComponent implements OnInit {
 
     constructor(
         private router: Router
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         // Remove access_token
         localStorage.removeItem('access_token');
+        // Remove isLogin
+        localStorage.removeItem('isLogin');
         // Remove isForgotPassword
-        localStorage.removeItem('isForgotPassword');
+        // localStorage.removeItem('isForgotPassword');
     }
 
     // Call api get Token for login Portal: Start

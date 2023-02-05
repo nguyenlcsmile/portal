@@ -1,5 +1,5 @@
 <div class="container-fluid p-0">
-    <div *ngIf="listURLCustomerPage.detail === false && listURLCustomerPage.card === false">
+    <div *ngIf="listURLCustomerPage.detail === false">
         <div class="row">
             <div class="col-12 col-lg-12">
                 <div class="card">
@@ -128,59 +128,61 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <table id="datatables-column-search-text-inputs" class="table table-bordered table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>CIF</th>
-                                        <th>Customer Name</th>
-                                        <th>Customer ID</th>
-                                        <th>Phone Number</th>
-                                        <th>Email Address</th>
-                                        <th>KYC Type</th>
-                                        <th>Date EKYC</th>
-                                        <th>Date VKYC</th>
-                                        <th>DOB</th>
-                                        <th>Risk Final</th>
-                                        <th>Notify</th>
-                                        <th>Segment</th>
-                                        <th>SubSegment</th>
-                                        <th>Account</th>
-                                        <th [width]="200">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>123456789</td>
-                                        <td>Nguyen Van A</td>
-                                        <td>0123456789</td>
-                                        <td>0369369907</td>
-                                        <td>vana@gmail.com</td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                        <td>test</td>
-                                        <td>02-02-2023</td>
-                                        <td>Risk Final</td>
-                                        <td>Notify</td>
-                                        <td>Segment</td>
-                                        <td>SubSegment</td>
-                                        <td>Account</td>
-                                        <td>
-                                            <button (click)="viewCustomerDetail()" class="btn btn-primary">View</button>
-                                            <button class="btn btn-danger mx-1">Edit</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- Paginate Page: Start -->
-                            <ngb-pagination 
-                                class="d-flex justify-content-end mt-2" 
-                                [collectionSize]="120" 
-                                [(page)]="currentPage"
-                                [maxSize]="4"
-                                [rotate]="true"
-                                [boundaryLinks]="true">
-                            </ngb-pagination>
-                            <!-- Paginate Page: End -->
+                            <div class="col-md">
+                                <table id="datatables-column-search-text-inputs" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>CIF</th>
+                                            <th>Customer Name</th>
+                                            <th>Customer ID</th>
+                                            <th>Phone Number</th>
+                                            <th>Email Address</th>
+                                            <th>KYC Type</th>
+                                            <th>Date EKYC</th>
+                                            <th>Date VKYC</th>
+                                            <th>DOB</th>
+                                            <th>Risk Final</th>
+                                            <th>Notify</th>
+                                            <th>Segment</th>
+                                            <th>SubSegment</th>
+                                            <th>Account</th>
+                                            <th [width]="200">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>123456789</td>
+                                            <td>Nguyen Van A</td>
+                                            <td>0123456789</td>
+                                            <td>0369369907</td>
+                                            <td>vana@gmail.com</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>02-02-2023</td>
+                                            <td>Risk Final</td>
+                                            <td>Notify</td>
+                                            <td>Segment</td>
+                                            <td>SubSegment</td>
+                                            <td>Account</td>
+                                            <td>
+                                                <button (click)="viewCustomerDetail()" class="btn btn-primary">View</button>
+                                                <button class="btn btn-danger mx-1">Edit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- Paginate Page: Start -->
+                                <ngb-pagination 
+                                    class="d-flex justify-content-end mt-2" 
+                                    [collectionSize]="120" 
+                                    [(page)]="currentPage"
+                                    [maxSize]="4"
+                                    [rotate]="true"
+                                    [boundaryLinks]="true">
+                                </ngb-pagination>
+                                <!-- Paginate Page: End -->
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,22 @@
 
 <div data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+    <!-- Login page: Start -->
+    <div *ngIf="isLogin === false && UrlPage === false" class="wrapper">
+        <div class="main">
+            <div *ngIf="isForgotPassword === false">
+                <app-login-page></app-login-page>
+            </div>
+            <!-- <div *ngIf="isForgotPassword === true">
+                <app-forgot-password-page></app-forgot-password-page>
+            </div> -->
+        </div>
+    </div>
+    <!-- Login page: End -->
+
     <div *ngIf="isLogin === true" class="wrapper">
         <!-- Sidebar -->
         <app-sidebar></app-sidebar>
-
+    
         <!-- Main -->
         <div class="main">
             <!-- Header -->
@@ -14,18 +27,8 @@
             </div>
         </div>
     </div>
-
-    <!-- Login page: Start -->
-    <div *ngIf="isLogin === false" class="main">
-        <div *ngIf="isForgotPassword === false">
-            <app-login-page></app-login-page>
-        </div>
-        <!-- <div *ngIf="isForgotPassword === true">
-            <app-forgot-password-page></app-forgot-password-page>
-        </div> -->
-    </div>
-    <!-- Login page: End -->
 </div>
+
 
 
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Amplify } from "@aws-amplify/core";
 import configAppSync from '../aws-exports';
+import { getUserDetail } from './app.service';
 
 Amplify.configure(configAppSync);
 
@@ -13,6 +14,9 @@ Amplify.configure(configAppSync);
 
 export class AppComponent {
     public title: string = 'DemoPortalV2';
+    public access_token: any;
+    public isLoginPage: any;
+    public UrlPage: boolean = false;
 
     public isLogin: any;
     public isForgotPassword: any = false;
@@ -22,22 +26,28 @@ export class AppComponent {
     ) { }
 
     ngOnInit(): void {
-        this.checkLoginPage();
         // this.checkForgotPassword();
+        this.checkLoginPage();
+        if (this.access_token) this.checkUserDetail();
     }
 
     checkLoginPage() {
-        let isLoginPage = localStorage.getItem('isLogin');
-        let access_token = localStorage.getItem('access_token');
+        this.isLoginPage = localStorage.getItem('isLogin');
+        this.access_token = localStorage.getItem('access_token');
         // console.log(">>>Check:", isLoginPage === JSON.stringify("true"));
-        if (isLoginPage === JSON.stringify('true') && access_token) {
+        if (this.isLoginPage === JSON.stringify('true') && this.access_token) {
             this.isLogin = true;
-            this.router.navigate(['v2/customer-page/detail']);
+            this.router.navigate(['v2/home-page']);
         } else {
             this.isLogin = false;
             this.router.navigate(['v2/login-page']);
         };
         // console.log(">>>Check isLogin:", this.isLogin);
+    }
+
+    async checkUserDetail() {
+        let res = await getUserDetail();
+        return;
     }
 
     // checkForgotPassword() {
