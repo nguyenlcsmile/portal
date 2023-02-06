@@ -4,7 +4,7 @@
         <div class="col-12 col-lg-12 mt-3">
             <div class="card">
                 <div class="card-header">
-                    <ul class="nav nav-pills card-header-pills pull-right" role="tablist">
+                    <ul class="nav nav-tabs card-header-tabs pull-right" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#customer-information">Customer Information</a>
                         </li>
@@ -16,6 +16,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#register-documents">Registration Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#vkyc-documents">VKYC Documents</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#card">Card</a>
@@ -114,6 +117,7 @@
                             </div>
                             <!-- CUSTOMER INFORMATION: END -->
                         </div>
+
                         <div class="tab-pane fade text-center" id="kyc-information" role="tabpanel">
                             <!-- KYC INFORMATION: START -->
                             <div class="row mt-2 align-middle">
@@ -144,15 +148,161 @@
                             </div>
                             <!-- KYC INFORMATION: END -->
                         </div>
-                        <div class="tab-pane fade text-center" id="AML-Classification-Status" role="tabpanel">
+
+                        <div class="tab-pane fade" id="AML-Classification-Status" role="tabpanel">
                             <!-- AML Classification - Status: low: START -->
-                            <p>Content AML-Classification-Status</p>
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <h5 class="card-title mb-0">Summary Table</h5>
+                                    <table class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Value</th>
+												<th>Risk Level</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th class="d-none d-xl-table-cell">Black List</th>
+												<td>
+                                                    <div class="row">
+                                                        <div class="input-group">
+                                                            <select class="form-select form-select-value">
+                                                                <option>Select...</option>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Country</th>
+												<td>VIET NAM</td>
+												<td><span class="badge bg-warning">Medium</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Classification of Transaction</th>
+												<td>...</td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">PEP List</th>
+												<td>
+                                                    <div class="row">
+                                                        <div class="input-group">
+                                                            <select class="form-select form-select-value">
+                                                                <option>Select...</option>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Occupation</th>
+												<td>...</td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Product/Service</th>
+												<td>...</td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+										</tbody>
+									</table>
+                                </div>
+                                <div class="col-lg-7">
+                                    <h5 class="card-title mb-0">AML Classification Matrix</h5>
+                                    <table class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th>Black List</th>
+												<th>PEP List</th>
+												<th>Country</th>
+                                                <th>Occupation</th>
+                                                <th>Classification of Transaction</th>
+                                                <th>Product/Service</th>
+                                                <th>Final Result</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-warning">Medium</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+											</tr>        
+                                        </tbody>
+                                    </table>
+
+                                    <div class=" mt-4">
+                                        <h5 class="card-title mb-0">Changing History</h5>
+                                        <table class="table table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>User</th>
+                                                    <th>Date Time</th>
+                                                    <th>Modified Fields</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>...</td>
+                                                    <td>...</td>
+                                                    <td>...</td>
+                                                </tr>        
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- AML Classification - Status: low: END -->
                         </div>
-                        <div class="tab-pane fade text-center" id="register-documents" role="tabpanel">
+
+                        <div class="tab-pane fade" id="register-documents" role="tabpanel">
                             <!-- REGISTRATION DOCUMENTS: START -->
-                            <p>Content REGISTRATION DOCUMENTS</p>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">Portrait</h5>
+                                        </div>
+                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">Front ID</h5>
+                                        </div>
+                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">Back ID</h5>
+                                        </div>
+                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                    </div>
+                                </div>
+                            </div>
                             <!-- REGISTRATION DOCUMENTS: END -->
+                        </div>
+
+                        <div class="tab-pane fade" id="vkyc-documents" role="tabpanel">
+                            <!-- VKYC DOCUMENTS: START -->
+                            <div class="row">
+                                <p>Don't have video KYC.</p>
+                            </div>
+                            <!-- VKYC DOCUMENTS: END -->
                         </div>
                         <div class="tab-pane fade" id="card" role="tabpanel">
                             <!-- CARD: START -->

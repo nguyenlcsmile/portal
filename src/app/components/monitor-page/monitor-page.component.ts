@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // import { APIService } from 'src/app/API.service';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
     selector: 'app-monitor-page',
@@ -214,7 +215,8 @@ export class MonitorPageComponent implements OnInit {
 
     constructor(
         // private apiAppSync: APIService
-    ) { }
+        private router: Router,
+    ) {}
 
     ngOnInit(): void {
         // sub data from appSync

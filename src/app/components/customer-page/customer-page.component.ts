@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { postListCustomer } from './customer-page.service';
 
 @Component({
     selector: 'app-customer-page',
@@ -88,11 +89,16 @@ export class CustomerPageComponent implements OnInit {
     ];
     // Variable subsegment box: End
 
+    // Variable listUser
+    public listUsers: any;
+
     constructor(
         private router: Router,
     ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.fetchListCustomer();
+    }
 
     ngAfterViewInit() { }
 
@@ -120,4 +126,10 @@ export class CustomerPageComponent implements OnInit {
         this.router.navigate(['v2/customer-page/detail']);
     }
     // View detail customer: End
+
+    async fetchListCustomer() {
+        let listUsers = await postListCustomer(0, 10, {});
+        this.listUsers = listUsers;
+        console.log(">>>Check listUsers:", this.listUsers);
+    }
 }

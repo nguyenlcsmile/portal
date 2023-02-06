@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { postAccessToken } from './login-page.service';
 import { Router } from '@angular/router';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { Store } from '@ngrx/store';
+import { handleLoginAction } from 'src/_store/page.actions';
+import { FormPageData } from 'src/_store/page.reducer';
 
 @Component({
     selector: 'app-login-page',
@@ -33,16 +36,13 @@ export class LoginPageComponent implements OnInit {
     public errorLogin: any = '';
 
     constructor(
-        private router: Router
-    ) { }
+        private router: Router,
+        private store: Store<FormPageData>
+    ) {}
 
     ngOnInit(): void {
         // Remove access_token
         localStorage.removeItem('access_token');
-        // Remove isLogin
-        localStorage.removeItem('isLogin');
-        // Remove isForgotPassword
-        // localStorage.removeItem('isForgotPassword');
     }
 
     // Call api get Token for login Portal: Start
@@ -60,11 +60,13 @@ export class LoginPageComponent implements OnInit {
         // console.log(">>>Check res:", res);
         if (res && res['status'] === 200) {
             this.loading = true;
-            let access_token = res['data']['data']['AccessToken']
-            localStorage.setItem('access_token', JSON.stringify(access_token));
-            localStorage.setItem('isLogin', JSON.stringify('true'));
-            this.router.navigate(['v2/home-page']);
-            location.reload();
+            setTimeout(() => {
+                let access_token = res['data']['data']['AccessToken']
+                localStorage.setItem('access_token', JSON.stringify(access_token));
+                this.store.dispatch(handleLoginAction());
+                this.router.navigate(['v2/home-page']);
+            }, 2000);
+            // location.reload();
         } else {
             // console.log(">>>Check login:", res['message']);
             this.errorLogin = 'Incorrect username or password.';
@@ -74,9 +76,4 @@ export class LoginPageComponent implements OnInit {
     handleShowPassword() {
         this.account.showPassword = !this.account.showPassword;
     }
-
-    // handleForgotPassword() {
-    //     localStorage.setItem('isForgotPassword', JSON.stringify('true'));
-    //     location.reload();
-    // }
 }

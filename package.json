@@ -27,10 +27,12 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.10",
+    "@angular/cli": "^11.2.10",
     "@angular/compiler-cli": "~11.2.11",
     "@angular/localize": "^11.2.14",
     "@aws-amplify/api": "^4.0.4",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@ngrx/store": "^10.1.2",
     "@types/graphql": "^14.5.0",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",

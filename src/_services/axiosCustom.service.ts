@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Router } from '@angular/router';
 
 const instance = axios.create({
-    baseURL: 'https://api-dashboard.ubank.vn/',
+    baseURL: 'https://api-dashboard.ubank.vn/uat',
     // timeout: 1000,
     // headers: { 'X-Custom-Header': 'foobar' } 
 });
@@ -24,10 +24,7 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    console.log(">>>Check respone:", response);
-    if (response) {
-
-    }
+    // console.log(">>>Check respone:", response);
     // return response && response.data ? response.data : response;
     return response;
 }, function (error) {
@@ -38,7 +35,7 @@ instance.interceptors.response.use(function (response) {
         let message = error?.response?.data?.message;
         let status = error?.response?.status;
         // console.log(">>>Check:", message, status);
-        if (status === 401 && message === 'Unauthorized') {
+        if (status === 401 && (message === 'Unauthorized' || message === 'The incoming token has expired')) {
             localStorage.removeItem('isLogin');
             localStorage.removeItem('access_token');
             location.reload();
