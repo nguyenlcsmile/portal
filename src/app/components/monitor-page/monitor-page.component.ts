@@ -216,7 +216,7 @@ export class MonitorPageComponent implements OnInit {
     constructor(
         // private apiAppSync: APIService
         private router: Router,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         // sub data from appSync

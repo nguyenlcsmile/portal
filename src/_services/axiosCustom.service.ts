@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Router } from '@angular/router';
 
 const instance = axios.create({
     baseURL: 'https://api-dashboard.ubank.vn/uat',
@@ -34,11 +33,11 @@ instance.interceptors.response.use(function (response) {
     if (error && error?.response) {
         let message = error?.response?.data?.message;
         let status = error?.response?.status;
-        // console.log(">>>Check:", message, status);
         if (status === 401 && (message === 'Unauthorized' || message === 'The incoming token has expired')) {
-            localStorage.removeItem('isLogin');
+            // console.log(">>>Check:", message, status);
             localStorage.removeItem('access_token');
             location.reload();
+            return;
         }
     }
     return error && error.response && error.response.data ? error.response.data : Promise.reject(error);

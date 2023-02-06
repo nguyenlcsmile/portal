@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
 
     ngDoCheck() {
         let currentUrlName = this.router.url;
+        localStorage.setItem('urlPage', JSON.stringify(currentUrlName));
         // console.log(">>>Check currentname:", currentUrlName);
         this.statusElementSidebar = {
             'monitor-page': '',
@@ -31,5 +32,4 @@ export class SidebarComponent implements OnInit {
         })
         // console.log(">>>Check status sidebar:", this.statusElementSidebar);
     }
-
 }
