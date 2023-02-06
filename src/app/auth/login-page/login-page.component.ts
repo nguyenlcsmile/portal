@@ -45,8 +45,9 @@ export class LoginPageComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // Remove access_token
+        // Remove localStorage
         localStorage.removeItem('access_token');
+        localStorage.removeItem('isLogin');
     }
 
     // Call api get Token for login Portal: Start
@@ -67,6 +68,7 @@ export class LoginPageComponent implements OnInit {
             setTimeout(() => {
                 let access_token = res['data']['data']['AccessToken']
                 localStorage.setItem('access_token', JSON.stringify(access_token));
+                localStorage.setItem('isLogin', JSON.stringify('true'));
                 this.store.dispatch(handleLoginAction());
                 this.router.navigate(['v2/home-page']);
                 location.reload();

@@ -19,36 +19,30 @@ export class AppComponent {
     public title: string = 'DemoPortalV2';
     public access_token: any;
     public isLoginPage: any = false;
+    public isLogin: any;
 
     constructor(
         private router: Router,
         private store: Store<FormPageData>
     ) { }
 
-    ngOnInit(): void {
-        // this.store.select('isLogin').subscribe(res => {
-        //     // Get infor from localStage: Start
-        //     this.access_token = localStorage.getItem('access_token');
-        //     // Get infor from localStage: End
-        //     // console.log("Check res:", res);
-
-        //     // Check page login: Start
-        // });
-    }
+    ngOnInit(): void { }
 
     ngDoCheck() {
         this.store.select('isLogin').subscribe(res => {
             // Get infor from localStage: Start
             this.access_token = localStorage.getItem('access_token');
+            this.isLogin = localStorage.getItem('isLogin');
             // Get infor from localStage: End
             // console.log("Check res:", res);
 
             // Check page login: Start
-            if (this.access_token && this.router.url.includes('/home-page')) {
+            if (this.access_token && this.isLogin && this.router.url.includes('home-page')) {
                 this.isLoginPage = true;
                 return;
-            } else if (this.access_token && !this.router.url.includes('/home-page') && !this.router.url.includes('/login-page')) {
+            } else if (this.access_token && this.isLogin && !this.router.url.includes('home-page') && !this.router.url.includes('login-page')) {
                 this.isLoginPage = true;
+                localStorage.setItem('isLogin', JSON.stringify('false'));
                 return;
             }
             else this.isLoginPage = false;
@@ -56,14 +50,17 @@ export class AppComponent {
         });
     }
 
+
     ngAfterViewInit() {
         if (this.access_token) this.checkUserDetail();
         if (this.isLoginPage) {
-            this.router.navigate(['v2/home-page']);
-            return;
+            if (this.isLogin === JSON.stringify('true')) {
+                this.router.navigate(['v2/home-page']);
+                return;
+            } else {
+                return;
+            }
         };
-        // if (this.isLogin === false && this.router.url.includes('/home-page')) this.router.navigate(['v2/home-page']);
-
         this.router.navigate(['v2/login-page']);
     }
 
