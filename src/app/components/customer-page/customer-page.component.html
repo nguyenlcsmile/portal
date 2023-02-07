@@ -219,21 +219,32 @@
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
-                                <button class="btn btn-secondary" type="button">CIF</button>
+                                <button class="btn btn-secondary" type="button">Full Name</button>
                                 <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.cifId" [ngModelOptions]="{standalone: true}">
+                                    [(ngModel)]="cloneCustomerEdit.fullName" [ngModelOptions]="{standalone: true}" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
-                                <button class="btn btn-secondary" type="button">Full Name</button>
+                                <button class="btn btn-secondary" type="button">First Name</button>
                                 <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.fullName" [ngModelOptions]="{standalone: true}">
+                                    [(ngModel)]="cloneCustomerEdit.firstName" [ngModelOptions]="{standalone: true}">
                             </div>
                         </div>
                     </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Last Name</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.lastName" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-100"></div>
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
@@ -245,7 +256,6 @@
                         </div>
                     </div>
 
-                    <div class="w-100"></div>
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
@@ -344,6 +354,17 @@
         </div>
     </ng-template>
     <!-- Modal Eidt Customer: End -->
+
+    <ngx-loading
+		[show]="loading"
+		[config]="{
+			animationType: ngxLoadingAnimationTypes.circleSwish,
+			primaryColour: primaryColour,
+			backdropBorderRadius: '3px',
+            fullScreenBackdrop: true
+		}">
+	</ngx-loading>
+    
     <router-outlet></router-outlet>
 </div>
 

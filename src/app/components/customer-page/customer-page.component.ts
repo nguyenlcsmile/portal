@@ -4,11 +4,12 @@ import { postListCustomer } from './customer-page.service';
 import { Store } from '@ngrx/store';
 import { RoleReducer } from 'src/_store/page.reducer';
 import { FormPageData } from 'src/_store/page.reducer';
-import { ModalDismissReasons, NgbModalConfig, NgbModal, NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModalConfig, NgbModal, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
 import { getDetailCustomer, getAddressCustomer } from './customer-page.service';
 import { getUserDetail } from 'src/app/app.service';
 import { handleRoleAction } from 'src/_store/page.actions';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @Component({
     selector: 'app-customer-page',
@@ -17,6 +18,12 @@ import { handleRoleAction } from 'src/_store/page.actions';
 })
 
 export class CustomerPageComponent implements OnInit {
+    // Variable for loading page: Start
+    public loading: any = false;
+    public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+    public primaryColour = '#FFD700';
+    // Variable for loading page: End
+
     public isRoleEdit: boolean = false;
 
     public currentPage: number = 1;
@@ -124,12 +131,12 @@ export class CustomerPageComponent implements OnInit {
         private formatter: NgbDateParserFormatter
     ) {
         // customize default values of modals used by this component tree
-		this.config.backdrop = 'static';
-		this.config.keyboard = false;
+        this.config.backdrop = 'static';
+        this.config.keyboard = false;
         this.config.size = 'xl';
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 
     ngOnChanges() {
         this.lastCurrentPage = this.currentPage;
@@ -151,7 +158,7 @@ export class CustomerPageComponent implements OnInit {
             // console.log("Check last:", this.lastCurrentPage);
             // console.log("Check current:", this.currentPage);
             this.lastCurrentPage = this.currentPage;
-            let skip = (this.currentPage - 1)*10;
+            let skip = (this.currentPage - 1) * 10;
             this.fetchListCustomer(skip, 10, {}).then(res => res).catch(err => err);
         }
 
@@ -163,14 +170,14 @@ export class CustomerPageComponent implements OnInit {
 
     // Handle close modal: start
     private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return `with: ${reason}`;
+        }
+    }
     // Handle close modal: end
 
     // Check status content for page customer: start
@@ -190,17 +197,23 @@ export class CustomerPageComponent implements OnInit {
     // View detail customer: Start
     viewCustomerDetail(cifId: any) {
         let encode_id = btoa(`v2/customer-page/detail:${cifId}`)
-        this.router.navigate(['v2/customer-page/detail'], { queryParams: { cifId: encode_id }});
+        this.router.navigate(['v2/customer-page/detail'], { queryParams: { cifId: encode_id } });
     }
     // View detail customer: End
 
     async editCustomerDetail(content: any, item: any) {
         console.log(">>>Check edit customer:", item);
         await this.handleGetDetailCustomer(item.cifId);
+        this.loading = false;
         console.log(">>>Check detail customer:", this.customerDetail);
 
         this.customerEdit = item;
         this.cloneCustomerEdit = _.cloneDeep(this.customerEdit);
+        // this.cloneCustomerEdit['firstName'] = this.customerDetail?.customerInqRs?.
+        this.cloneCustomerEdit['fullName'] = this.customerDetail?.fullName;
+        this.cloneCustomerEdit['firstName'] = this.customerDetail?.customerInqRs?.firstName;
+        this.cloneCustomerEdit['lastName'] = this.customerDetail?.customerInqRs?.lastName;
+        this.cloneCustomerEdit['phoneNo'] = this.customerDetail?.customerInqRs?.phoneNo;
         this.cloneCustomerEdit['gender'] = this.customerDetail?.customerInqRs?.gender;
         this.cloneCustomerEdit['currentAddrDetails'] = this.customerDetail?.customerInqRs?.currentAddrDetails;
         this.cloneCustomerEdit['permanentAddrDetails'] = this.customerDetail?.customerInqRs?.permanentAddrDetails;
@@ -212,18 +225,18 @@ export class CustomerPageComponent implements OnInit {
         // Processing format time: END
 
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
+            (result) => {
+                this.closeResult = `Closed with: ${result}`;
+            },
+            (reason) => {
+                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            },
+        );
     }
 
     handleConvertFormatDOB(key: string, day: string) {
         let splitArray = day.split('-');
-        
+
         if (key === 'dob') {
             const date: NgbDate = new NgbDate(Number(splitArray[2]), Number(splitArray[1]), Number(splitArray[0]));
             let timeConvert = this.formatter.format(date);
@@ -265,6 +278,7 @@ export class CustomerPageComponent implements OnInit {
     }
 
     async handleGetDetailCustomer(cifId: any) {
+        this.loading = true;
         let res = await getDetailCustomer(cifId);
         // console.log(">>>Check res:", res);
         if (res && res?.status === 200) {
@@ -272,7 +286,6 @@ export class CustomerPageComponent implements OnInit {
             if (this.customerDetail) {
                 let idDistrict = this.customerDetail?.customerInqRs?.currentAddrDetails?.district;
                 let resAdd = await getAddressCustomer('district', Number(idDistrict));
-                
             }
             // console.log(">>>Check detail customer:", this.customerDetail);
         }
