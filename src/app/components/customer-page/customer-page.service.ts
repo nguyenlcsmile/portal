@@ -12,4 +12,7 @@ const getDetailCustomer = (cifId: any) => {
     return axios.get(`v1/dashboard/customer/get-detail?cifId=${cifId}`);
 }
 
-export { postListCustomer, getDetailCustomer };
+const getAddressCustomer = (type: any, id: any) => {
+    return axios.get(`https://api-dashboard.ubank.vn/uat/v1/dashboard/customer/list-address?type=${type}&id=${id}`);
+}
+export { postListCustomer, getDetailCustomer, getAddressCustomer };

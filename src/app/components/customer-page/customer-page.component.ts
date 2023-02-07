@@ -6,7 +6,9 @@ import { RoleReducer } from 'src/_store/page.reducer';
 import { FormPageData } from 'src/_store/page.reducer';
 import { ModalDismissReasons, NgbModalConfig, NgbModal, NgbDate, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import * as _ from "lodash";
-import { getDetailCustomer } from './customer-page.service';
+import { getDetailCustomer, getAddressCustomer } from './customer-page.service';
+import { getUserDetail } from 'src/app/app.service';
+import { handleRoleAction } from 'src/_store/page.actions';
 
 @Component({
     selector: 'app-customer-page',
@@ -15,6 +17,8 @@ import { getDetailCustomer } from './customer-page.service';
 })
 
 export class CustomerPageComponent implements OnInit {
+    public isRoleEdit: boolean = false;
+
     public currentPage: number = 1;
     public lastCurrentPage: number = 1;
     public isCheckCurrentPage: boolean = false;
@@ -122,7 +126,7 @@ export class CustomerPageComponent implements OnInit {
         // customize default values of modals used by this component tree
 		this.config.backdrop = 'static';
 		this.config.keyboard = false;
-        this.config.size = 'xl'
+        this.config.size = 'xl';
     }
 
     ngOnDestroy() {}
@@ -132,7 +136,9 @@ export class CustomerPageComponent implements OnInit {
         console.log(this.customerEdit);
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.handleGetUserDetail();
+    }
 
     ngAfterViewInit() {
         this.fetchListCustomer(this.currentPage - 1, 10, {});
@@ -148,6 +154,11 @@ export class CustomerPageComponent implements OnInit {
             let skip = (this.currentPage - 1)*10;
             this.fetchListCustomer(skip, 10, {}).then(res => res).catch(err => err);
         }
+
+        // Check role edit
+        this.store.select('isEdit').subscribe(res => {
+            this.isRoleEdit = res;
+        })
     }
 
     // Handle close modal: start
@@ -177,8 +188,9 @@ export class CustomerPageComponent implements OnInit {
     // Check status content for page customer: end
 
     // View detail customer: Start
-    viewCustomerDetail() {
-        this.router.navigate(['v2/customer-page/detail']);
+    viewCustomerDetail(cifId: any) {
+        let encode_id = btoa(`v2/customer-page/detail:${cifId}`)
+        this.router.navigate(['v2/customer-page/detail'], { queryParams: { cifId: encode_id }});
     }
     // View detail customer: End
 
@@ -190,11 +202,13 @@ export class CustomerPageComponent implements OnInit {
         this.customerEdit = item;
         this.cloneCustomerEdit = _.cloneDeep(this.customerEdit);
         this.cloneCustomerEdit['gender'] = this.customerDetail?.customerInqRs?.gender;
+        this.cloneCustomerEdit['currentAddrDetails'] = this.customerDetail?.customerInqRs?.currentAddrDetails;
+        this.cloneCustomerEdit['permanentAddrDetails'] = this.customerDetail?.customerInqRs?.permanentAddrDetails;
 
         // Processing format time: START
         this.cloneCustomerEdit.dob = this.handleConvertFormatDOB('dob', this.cloneCustomerEdit.dob);
         this.cloneCustomerEdit.ekycDate = this.handleConvertFormatDOB('ekycDate', this.cloneCustomerEdit.ekycDate);
-        // console.log(">>>Check dob customer:", this.cloneCustomerEdit.dob);
+        console.log(">>>Check cloneCustomerEdit customer:", this.cloneCustomerEdit);
         // Processing format time: END
 
         this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
@@ -236,11 +250,30 @@ export class CustomerPageComponent implements OnInit {
         return res;
     }
 
+    async handleGetUserDetail() {
+        let res = await getUserDetail();
+        if (res && res?.status === 200) {
+            let inforCustomer = res?.data?.roles?.app?.customer;
+            // console.log(">>>Check inforCustomer:", inforCustomer);
+            Object.keys(inforCustomer).map(item => {
+                // console.log(inforCustomer[item]);
+                if (inforCustomer[item] === 'edit_info') {
+                    this.store.dispatch(handleRoleAction());
+                }
+            })
+        }
+    }
+
     async handleGetDetailCustomer(cifId: any) {
         let res = await getDetailCustomer(cifId);
         // console.log(">>>Check res:", res);
         if (res && res?.status === 200) {
             this.customerDetail = res?.data?.detail;
+            if (this.customerDetail) {
+                let idDistrict = this.customerDetail?.customerInqRs?.currentAddrDetails?.district;
+                let resAdd = await getAddressCustomer('district', Number(idDistrict));
+                
+            }
             // console.log(">>>Check detail customer:", this.customerDetail);
         }
     }

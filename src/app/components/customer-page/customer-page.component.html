@@ -181,8 +181,8 @@
                                             <td>{{item?.accountId}}</td>
                                             <td>{{item?.cifId}}</td>
                                             <td>
-                                                <button (click)="viewCustomerDetail()" class="btn btn-primary">View</button>
-                                                <button (click)="editCustomerDetail(content, item)" class="btn btn-danger mx-1">Edit</button>
+                                                <button (click)="viewCustomerDetail(item.cifId)" class="btn btn-primary">View</button>
+                                                <button *ngIf="isRoleEdit === true" (click)="editCustomerDetail(content, item)" class="btn btn-danger mx-1">Edit</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -285,22 +285,57 @@
                     </div>
 
                     <div class="w-100"></div>
-                    <div class="col-md col-lg-8">
+                    <div class="col-md col-lg-12">
                         <div class="mb-3">
                             <div class="input-group">
-                                <button class="btn btn-secondary" type="button">Email</button>
+                                <button class="btn btn-secondary" type="button">Current Address</button>
                                 <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.email" [ngModelOptions]="{standalone: true}">
+                                    [(ngModel)]="cloneCustomerEdit.currentAddrDetails.addressLine1" 
+                                    [ngModelOptions]="{standalone: true}">
+                                
+                                <button class="btn btn-secondary" type="button">Ward</button>
+                                <select class="form-select">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
+                                <button class="btn btn-secondary" type="button">District</button>
+                                <select class="form-select">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md col-lg-12">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Current Address</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.permanentAddrDetails.addressLine1" 
+                                    [ngModelOptions]="{standalone: true}">
+
+                                <button class="btn btn-secondary" type="button">Ward</button>
+                                <select class="form-select">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
+                                <button class="btn btn-secondary" type="button">District</button>
+                                <select class="form-select">
+                                    <option>Select...</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="mb-3">
-                    <label class="form-label" for="dateOfBirth">Date of birth</label>
-                    <div class="input-group mb-3">
-                        
-                    </div>
-                </div> -->
             </form>
         </div>
         <div class="modal-footer">

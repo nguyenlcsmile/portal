@@ -3,12 +3,12 @@ import { handleLoginAction, handleRoleAction } from './page.actions';
 
 export interface FormPageData {
     isLogin?: any;
-    isTest?: any;
+    isEdit?: any;
 }
 
 export const initialState = {
     isLogin: false,
-    isRole: [],
+    isEdit: false,
 };
 
 export const LoginReducer = createReducer(
@@ -20,6 +20,9 @@ export const LoginReducer = createReducer(
 );
 
 export const RoleReducer = createReducer(
-    initialState.isRole,
-    on(handleRoleAction, (state) => state)
+    initialState.isEdit,
+    on(handleRoleAction, (state) => {
+        // console.log(">>>Check state:", state)
+        return !state;
+    })
 );

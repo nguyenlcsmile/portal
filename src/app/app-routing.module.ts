@@ -14,13 +14,15 @@ const routes: Routes = [
     // { path: 'v2/forgot-password-page', component: ForgotPasswordPageComponent },
     { path: 'v2/home-page', component: HomePageComponent },
     { path: 'v2/monitor-page', component: MonitorPageComponent },
-    {
-        path: 'v2/customer-page', component: CustomerPageComponent,
-        children: [
-            { path: '', redirectTo: 'v2/customer-page', pathMatch: 'full' },
-            { path: 'detail', component: CustomerDetailPageComponent }
-        ]
-    },
+    // {
+    //     path: 'v2/customer-page', component: CustomerPageComponent,
+    //     children: [
+    //         { path: '', redirectTo: 'v2/customer-page', pathMatch: 'full' },
+    //         { path: 'detail', component: CustomerDetailPageComponent }
+    //     ]
+    // },
+    { path: 'v2/customer-page', component: CustomerPageComponent},
+    { path: 'v2/customer-page/detail', component: CustomerDetailPageComponent },
 ];
 
 @NgModule({

@@ -48,7 +48,7 @@ import { SignUpPageComponent } from './auth/sign-up-page/sign-up-page.component'
         }),
         StoreModule.forRoot({ 
             isLogin: LoginReducer,
-            isTest: RoleReducer
+            isEdit: RoleReducer,
         })
     ],
     providers: [],
