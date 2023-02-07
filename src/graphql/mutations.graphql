@@ -1,0 +1,7 @@
+# this is an auto generated file. This will be overwritten
+mutation AddSampleData($value: String!) {
+  addSampleData(value: $value) {
+    value
+    datetime
+  }
+}

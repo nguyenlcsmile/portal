@@ -15,9 +15,9 @@ export class SidebarComponent implements OnInit {
 
     constructor(
         private router: Router,
-    ) {}
+    ) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     ngDoCheck() {
         let currentUrlName = this.router.url;
@@ -27,10 +27,8 @@ export class SidebarComponent implements OnInit {
             'customer-page': ''
         }
         Object.keys(this.statusElementSidebar).map(keyName => {
-            let key = currentUrlName.replace('/', '');
-            if (keyName === key) this.statusElementSidebar[key] = 'active';
+            if (currentUrlName.includes(keyName)) this.statusElementSidebar[keyName] = 'active';
         })
         // console.log(">>>Check status sidebar:", this.statusElementSidebar);
     }
-    
 }

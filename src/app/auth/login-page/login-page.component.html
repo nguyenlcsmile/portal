@@ -1,0 +1,78 @@
+<div data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
+	<!-- <ng-template #customLoadingTemplate> -->
+		<main class="d-flex w-100 h-100">
+			<div class="container d-flex flex-column">
+				<div class="row vh-100">
+					<div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+						<div class="d-table-cell align-middle">
+	
+							<div class="text-center mt-4">
+								<h1 class="h2">Welcome to Ubank Portal!</h1>
+							</div>
+	
+							<div class="card mt-4">
+								<div class="card-body">
+									<div class="m-sm-4">
+										<div class="text-center">
+											<img src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Logo-Ubank" class="img-fluid rounded-circle" width="132" height="132">
+										</div>
+										<div *ngIf="errorLogin" class="alert alert-danger alert-outline alert-dismissible mt-4" role="alert">
+											<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+											<div class="alert-icon">
+												<i class="far fa-fw fa-bell"></i>
+											</div>
+											<div class="alert-message">
+												<strong>{{errorLogin}}</strong>
+											</div>
+										</div>
+										<form>
+											<div class="mb-3">
+												<label class="form-label">Username</label>
+												<input class="form-control form-control-lg {{account.username.valid ? 'is-invalid' : ''}}" 
+													type="text" name="text" placeholder="Enter your username" 
+													[(ngModel)]="account.username.value">
+											</div>
+											<div class="mb-3">
+												<label class="form-label">Password</label>
+												<div class="input-group mb-3">
+													<input class="form-control form-control-lg {{account.password.valid ? 'is-invalid' : ''}}" 
+														type="{{!account.showPassword ? 'password' : 'text'}}" name="password" 
+														placeholder="Enter your password" [(ngModel)]="account.password.value">
+													<span class="input-group-text" style="cursor: pointer;">
+														<i class="align-middle fas fa-fw {{account.showPassword ? 'fa-eye' : 'fa-eye-slash'}}"
+															(click)="handleShowPassword()"></i>
+													</span>
+												</div>
+												<!-- <a class="forgot-password" (click)="handleForgotPassword()">Forgot password?</a> -->
+												<a href="https://sso.ubank.vn/forgotPassword?client_id=47rj3rlovbcgdjvm9j5uc9glcj&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://portal.ubank.vn/login">Forgot password?</a>
+											</div>
+											<div class="text-center mt-3">
+												<button type="submit" class="btn btn-lg btn-primary col-md-4" (click)="handleLoginPage()">
+													Sign in
+												</button>
+												<p class="text-center mt-4">Need an account? 
+													<a href="https://sso.ubank.vn/signup?client_id=47rj3rlovbcgdjvm9j5uc9glcj&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://portal.ubank.vn/login">
+														Sign up
+													</a>
+												</p>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	<!-- </ng-template> -->
+
+	<ngx-loading
+	[show]="loading"
+	[config]="{
+		animationType: ngxLoadingAnimationTypes.circleSwish,
+        primaryColour: primaryColour,
+        backdropBorderRadius: '3px'
+	}">
+	</ngx-loading>
+</div>

@@ -1,0 +1,481 @@
+<div class="container-fluid p-0">
+    <h3><strong>CUSTOMER DETAIL</strong></h3>
+    <div class="row">
+        <div class="col-12 col-lg-12 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs pull-right" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#customer-information">Customer Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#kyc-information">KYC Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#AML-Classification-Status">AML Classification - Status: Low</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#register-documents">Registration Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#vkyc-documents">VKYC Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#card">Card</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="customer-information" role="tabpanel">
+                            <!-- CUSTOMER INFORMATION: START -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <table class="table table-sm mt-2 mb-4">
+                                        <tbody>
+                                            <tr>
+                                                <th>Full Name</th>
+                                                <td>{{custDetail?.fullName}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Gender</th>
+                                                <td>F</td>
+                                            </tr>
+                                            <tr>
+                                                <th>ID No.</th>
+                                                <td>123456789</td>
+                                            </tr>
+                                            <tr>
+                                                <th>POI</th>
+                                                <td>00065</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PID No.</th>
+                                                <td>123456789</td>
+                                            </tr>
+                                            <tr>
+                                                <th>PID Status</th>
+                                                <td>123456789</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone</th>
+                                                <td>123456789</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Occupation</th>
+                                                <td>123456789</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Permanent Address</th>
+                                                <td>Ho Chi Minh</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Current Address</th>
+                                                <td>Ho Chi Minh</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-6">
+                                    <table class="table table-sm mt-2 mb-4">
+                                        <tbody>
+                                            <tr>
+                                                <th>CIF</th>
+                                                <td>555794388</td>
+                                            </tr>
+                                            <tr>
+                                                <th>DOB</th>
+                                                <td>02-02-2023</td>
+                                            </tr>
+                                            <tr>
+                                                <th>DOI</th>
+                                                <td>02-02-2023</td>
+                                            </tr>
+                                            <tr>
+                                                <th>DOE</th>
+                                                <td>02-02-2023</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>vana@gmail.com</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Possition</th>
+                                                <td>...</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Segment</th>
+                                                <td>OM</td>
+                                            </tr>
+                                            <tr>
+                                                <th>SubSegment</th>
+                                                <td>O0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- CUSTOMER INFORMATION: END -->
+                        </div>
+
+                        <div class="tab-pane fade text-center" id="kyc-information" role="tabpanel">
+                            <!-- KYC INFORMATION: START -->
+                            <div class="row mt-2 align-middle">
+                                <div class="col-md col-lg-3">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text btn-secondary">KYC Method</span>
+                                            <input type="text" class="form-control" value="E" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md col-lg-3">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text btn-secondary">KYC Status</span>
+                                            <input type="text" class="form-control" value="Y" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text btn-secondary">Reason Status</span>
+                                            <input type="text" class="form-control" value="KYC Success - Waiting customer sign Cass" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- KYC INFORMATION: END -->
+                        </div>
+
+                        <div class="tab-pane fade" id="AML-Classification-Status" role="tabpanel">
+                            <!-- AML Classification - Status: low: START -->
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <h5 class="card-title mb-0">Summary Table</h5>
+                                    <table class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Value</th>
+												<th>Risk Level</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th class="d-none d-xl-table-cell">Black List</th>
+												<td>
+                                                    <div class="row">
+                                                        <div class="input-group">
+                                                            <select class="form-select form-select-value">
+                                                                <option>Select...</option>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Country</th>
+												<td>VIET NAM</td>
+												<td><span class="badge bg-warning">Medium</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Classification of Transaction</th>
+												<td>...</td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">PEP List</th>
+												<td>
+                                                    <div class="row">
+                                                        <div class="input-group">
+                                                            <select class="form-select form-select-value">
+                                                                <option>Select...</option>
+                                                                <option>Yes</option>
+                                                                <option>No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Occupation</th>
+												<td>...</td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+                                            <tr>
+												<th class="d-none d-xl-table-cell">Product/Service</th>
+												<td>...</td>
+												<td><span class="badge bg-success">Low</span></td>
+											</tr>
+										</tbody>
+									</table>
+                                </div>
+                                <div class="col-lg-7">
+                                    <h5 class="card-title mb-0">AML Classification Matrix</h5>
+                                    <table class="table table-striped" style="width:100%">
+										<thead>
+											<tr>
+												<th>Black List</th>
+												<th>PEP List</th>
+												<th>Country</th>
+                                                <th>Occupation</th>
+                                                <th>Classification of Transaction</th>
+                                                <th>Product/Service</th>
+                                                <th>Final Result</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-warning">Medium</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+                                                <td><span class="badge bg-success">Low</span></td>
+											</tr>        
+                                        </tbody>
+                                    </table>
+
+                                    <div class=" mt-4">
+                                        <h5 class="card-title mb-0">Changing History</h5>
+                                        <table class="table table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>User</th>
+                                                    <th>Date Time</th>
+                                                    <th>Modified Fields</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>...</td>
+                                                    <td>...</td>
+                                                    <td>...</td>
+                                                </tr>        
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- AML Classification - Status: low: END -->
+                        </div>
+
+                        <div class="tab-pane fade" id="register-documents" role="tabpanel">
+                            <!-- REGISTRATION DOCUMENTS: START -->
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">Portrait</h5>
+                                        </div>
+                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">Front ID</h5>
+                                        </div>
+                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title mb-0">Back ID</h5>
+                                        </div>
+                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- REGISTRATION DOCUMENTS: END -->
+                        </div>
+
+                        <div class="tab-pane fade" id="vkyc-documents" role="tabpanel">
+                            <!-- VKYC DOCUMENTS: START -->
+                            <div class="row">
+                                <p>Don't have video KYC.</p>
+                            </div>
+                            <!-- VKYC DOCUMENTS: END -->
+                        </div>
+                        <div class="tab-pane fade" id="card" role="tabpanel">
+                            <!-- CARD: START -->
+                            <div class="row">
+                                <div class="accordion" id="accordionPanelsStayOpenExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                Card Item #1 <span class="badge bg-warning mx-4">Pending</span>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                            <div class="accordion-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="mb-4">
+                                                                    Hello <strong>Charles Hall</strong>,
+                                                                    <br>
+                                                                    Something information <strong>Card</strong>.
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Send SMS</strong></h5>
+                                                                        <strong class="badge bg-primary mt-2" style="cursor: pointer; font-size: 12px;">Go to URL</strong>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Pending Card</strong></h5>
+                                                                        <!-- <strong class="badge bg-success">Success</strong> -->
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingTwo">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                Card Item #2 <span class="badge bg-danger mx-4">Fail</span>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                            <div class="accordion-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="mb-4">
+                                                                    Hello <strong>Charles Hall</strong>,
+                                                                    <br>
+                                                                    Something information <strong>Card</strong>.
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Send SMS</strong></h5>
+                                                                        <strong class="badge bg-primary mt-2" style="cursor: pointer; font-size: 12px;">Go to URL</strong>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Fail</strong></h5>
+                                                                        <strong>Reason for failure</strong>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion mt-3" id="accordionPanelsStayOpenExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingThree">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                Card Item #3 <span class="badge bg-success mx-4">Success</span>
+                                            </button>
+                                        </h2>
+                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                                            <div class="accordion-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="mb-4">
+                                                                    Hello <strong>Charles Hall</strong>,
+                                                                    <br>
+                                                                    Something information <strong>Card</strong>.
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Send SMS</strong></h5>
+                                                                        <strong class="badge bg-primary mt-2" style="cursor: pointer; font-size: 12px;">Go to URL</strong>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Pending Card</strong></h5>
+                                                                        <!-- <strong class="badge bg-success">Success</strong> -->
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <h5 class="text-muted mb-0"><strong>Success</strong></h5>
+                                                                    </div>
+                                                                    <div class="col-md-6 text-md-end">
+                                                                        <div class="text-muted">Date</div>
+                                                                        <strong>October 2, 2018 - 03:45 pm</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- CARD: END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

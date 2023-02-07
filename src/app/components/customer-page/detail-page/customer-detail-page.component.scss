@@ -1,0 +1,10 @@
+.form-select-value {
+    flex: 0.5 0.5 auto !important;
+}
+
+.nav-link {
+    color: #000;
+    &.active {
+        color: rgb(255, 153, 0);
+    }
+}
