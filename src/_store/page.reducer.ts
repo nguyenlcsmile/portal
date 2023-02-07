@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { handleLoginAction, handleTestAction } from './page.actions';
+import { handleLoginAction, handleRoleAction } from './page.actions';
 
 export interface FormPageData {
     isLogin?: any;
@@ -8,7 +8,7 @@ export interface FormPageData {
 
 export const initialState = {
     isLogin: false,
-    isTest: false
+    isRole: [],
 };
 
 export const LoginReducer = createReducer(
@@ -19,7 +19,7 @@ export const LoginReducer = createReducer(
     })
 );
 
-export const TestReducer = createReducer(
-    initialState.isTest,
-    on(handleTestAction, (state) => state)
+export const RoleReducer = createReducer(
+    initialState.isRole,
+    on(handleRoleAction, (state) => state)
 );

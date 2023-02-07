@@ -42,7 +42,7 @@ export class AppComponent {
                 return;
             } else if (this.access_token && this.isLogin && !this.router.url.includes('home-page') && !this.router.url.includes('login-page')) {
                 this.isLoginPage = true;
-                localStorage.setItem('isLogin', JSON.stringify('false'));
+                localStorage.setItem('isLogin', JSON.stringify('true'));
                 return;
             }
             else this.isLoginPage = false;
@@ -54,7 +54,7 @@ export class AppComponent {
     ngAfterViewInit() {
         if (this.access_token) this.checkUserDetail();
         if (this.isLoginPage) {
-            if (this.isLogin === JSON.stringify('true')) {
+            if (this.isLogin === JSON.stringify('false')) {
                 this.router.navigate(['v2/home-page']);
                 return;
             } else {

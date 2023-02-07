@@ -12,7 +12,8 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">CIF</button>
-                                        <input type="text" class="form-control" placeholder="CIF...">
+                                        <input type="text" class="form-control" placeholder="CIF..."
+                                        [(ngModel)]="filter.cif">
                                     </div>
                                 </div>
                             </div>
@@ -20,7 +21,8 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Phone Number</button>
-                                        <input type="text" class="form-control" placeholder="Phone Number...">
+                                        <input type="text" class="form-control" placeholder="Phone Number..."
+                                        [(ngModel)]="filter.phoneNumber">
                                     </div>
                                 </div>
                             </div>
@@ -29,7 +31,8 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Customer ID</button>
-                                        <input type="text" class="form-control" placeholder="Customer ID...">
+                                        <input type="text" class="form-control" placeholder="Customer ID..."
+                                        [(ngModel)]="filter.customerId">
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +40,8 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Email Address</button>
-                                        <input type="text" class="form-control" placeholder="Email Address...">
+                                        <input type="text" class="form-control" placeholder="Email Address..."
+                                        [(ngModel)]="filter.email">
                                     </div>
                                 </div>
                             </div>
@@ -46,15 +50,16 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Customer Name</button>
-                                        <input type="text" class="form-control" placeholder="Customer Name...">
+                                        <input type="text" class="form-control" placeholder="Customer Name..."
+                                        [(ngModel)]="filter.customerName">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md">
                                 <div class="mb-3">
                                     <div class="input-group">
-                                        <button class="btn btn-secondary" type="button">Status</button>
-                                        <select [(ngModel)]="status" class="form-select">
+                                        <button class="btn btn-secondary" type="button">Status KYC Type</button>
+                                        <select [(ngModel)]="filter.kyc_type" class="form-select">
                                             <option *ngFor="let item of statusList" [ngValue]="item.id">{{item.name}}</option>
                                         </select>
                                     </div>
@@ -65,7 +70,8 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">DOB (DD-MM-YYYY)</button>
-                                        <input type="text" class="form-control" placeholder="DD-MM-YYYY...">
+                                        <input type="text" class="form-control" placeholder="DD-MM-YYYY..."
+                                        [(ngModel)]="filter.dob">
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +79,7 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Status Risk</button>
-                                        <select [(ngModel)]="statusRisk" class="form-select">
+                                        <select [(ngModel)]="filter.finalRisk" class="form-select">
                                             <option *ngFor="let item of statusRiskList" [ngValue]="item.id">{{item.name}}</option>
                                         </select>
                                     </div>
@@ -84,7 +90,7 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Segment</button>
-                                        <select [(ngModel)]="segment" class="form-select">
+                                        <select [(ngModel)]="filter.segment" class="form-select">
                                             <option *ngFor="let item of segmentList" [ngValue]="item.id">{{item.name}}</option>
                                         </select>
                                     </div>
@@ -94,7 +100,7 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">SubSegment</button>
-                                        <select [(ngModel)]="subsegment" class="form-select">
+                                        <select [(ngModel)]="filter.subsegment" class="form-select">
                                             <option *ngFor="let item of subsegmentList" [ngValue]="item.id">{{item.name}}</option>
                                         </select>
                                     </div>
@@ -104,7 +110,7 @@
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <button class="btn btn-secondary" type="button">Notify Risk Auto</button>
-                                        <select [(ngModel)]="diffRisk" class="form-select">
+                                        <select [(ngModel)]="filter.diffRisk" class="form-select">
                                             <option *ngFor="let item of diffRiskList" [ngValue]="item.id">{{item.name}}</option>
                                         </select>
                                     </div>
@@ -112,7 +118,7 @@
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md text-center mt-3">
-                                <button class="btn btn-primary col-md-4">Search</button>
+                                <button (click)="handleSearchCustomer()" class="btn btn-primary col-md-4">Search</button>
                             </div>
                         </div>
                     </div>
@@ -133,54 +139,65 @@
                                     <thead>
                                         <tr>
                                             <th>CIF</th>
-                                            <th>Customer Name</th>
+                                            <th [width]="200">Customer Name</th>
                                             <th>Customer ID</th>
                                             <th>Phone Number</th>
                                             <th>Email Address</th>
                                             <th>KYC Type</th>
-                                            <th>Date EKYC</th>
-                                            <th>Date VKYC</th>
-                                            <th>DOB</th>
-                                            <th>Risk Final</th>
+                                            <th [width]="200">Date EKYC</th>
+                                            <th [width]="200">Date VKYC</th>
+                                            <th [width]="200">DOB</th>
+                                            <th [width]="100">Risk Final</th>
                                             <th>Notify</th>
                                             <th>Segment</th>
                                             <th>SubSegment</th>
                                             <th>Account</th>
-                                            <th [width]="200">Action</th>
+                                            <th [width]="300">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Nguyen Van A</td>
-                                            <td>0123456789</td>
-                                            <td>0369369907</td>
-                                            <td>vana@gmail.com</td>
-                                            <td>test</td>
-                                            <td>test</td>
-                                            <td>test</td>
-                                            <td>02-02-2023</td>
-                                            <td>Risk Final</td>
-                                            <td>Notify</td>
-                                            <td>Segment</td>
-                                            <td>SubSegment</td>
-                                            <td>Account</td>
+                                        <tr *ngFor="let item of listUsers">
+                                            <td>{{item?.cifId}}</td>
+                                            <td>{{item?.fullName}}</td>
+                                            <td>{{item?.nid}}</td>
+                                            <td>{{item?.phoneNo}}</td>
+                                            <td>{{item?.email}}</td>
+                                            <td>
+                                                <span *ngIf="item.kycType === 'E'">eKyc</span>
+                                                <span *ngIf="item.kycType === 'M'">Manual KYC</span>
+                                                <span *ngIf="item.kycType === 'V'">Video KYC</span>
+                                            </td>
+                                            <td>{{item?.ekycDate}}</td>
+                                            <td>{{item?.vkycDate}}</td>
+                                            <td>{{item?.dob}}</td>
+                                            <td>
+                                                <span *ngIf="item.finalRisk === 'typical_high'">Typical High Risk</span>
+                                                <span *ngIf="item.finalRisk === 'default_high'">Default High Risk</span>
+                                                <span *ngIf="item.finalRisk === 'low'">Low Risk</span>
+                                                <span *ngIf="item.finalRisk === 'N/A'">N/A</span>
+                                            </td>
+                                            <td>{{item?.segment}}</td>
+                                            <td>{{item?.subsegment}}</td>
+                                            <td>{{item?.accountId}}</td>
+                                            <td>{{item?.cifId}}</td>
                                             <td>
                                                 <button (click)="viewCustomerDetail()" class="btn btn-primary">View</button>
-                                                <button class="btn btn-danger mx-1">Edit</button>
+                                                <button (click)="editCustomerDetail(content, item)" class="btn btn-danger mx-1">Edit</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <!-- Paginate Page: Start -->
-                                <ngb-pagination 
-                                    class="d-flex justify-content-end mt-2" 
-                                    [collectionSize]="120" 
-                                    [(page)]="currentPage"
-                                    [maxSize]="4"
-                                    [rotate]="true"
-                                    [boundaryLinks]="true">
-                                </ngb-pagination>
+                                <div>
+                                    <ngb-pagination 
+                                        class="d-flex justify-content-end mt-2" 
+                                        [collectionSize]="totalPage" 
+                                        [(page)]="currentPage"
+                                        [maxSize]="4"
+                                        [rotate]="true"
+                                        [boundaryLinks]="true">
+                                    </ngb-pagination>
+                                </div>
                                 <!-- Paginate Page: End -->
                             </div>
                         </div>
@@ -190,6 +207,108 @@
         </div>
     </div>
 
+    <!-- Modal Eidt Customer: Start -->
+    <ng-template #content let-modal>
+        <div class="modal-header" style="background-color: rgb(114, 114, 253);">
+            <h4 class="modal-title" id="modal-basic-title" style="font-weight: 500; font-size: 20px; color: #fff;">EDIT CUSTOMER</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="row">
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">CIF</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.cifId" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Full Name</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.fullName" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Gender</button>
+                                <select [(ngModel)]="cloneCustomerEdit.gender" [ngModelOptions]="{standalone: true}" class="form-select">
+                                    <option *ngFor="let item of listGender" [ngValue]="item.id">{{item.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-100"></div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Phone</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.phoneNo" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">nid</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.nid" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">DOB</button>
+                                <input
+                                    id="dateOfBirth"
+                                    class="form-control"
+                                    placeholder="YYYY-MM-DD"
+                                    name="dp"
+                                    [value]="cloneCustomerEdit.dob"
+                                    ngbDatepicker
+                                    #dp="ngbDatepicker"
+                                />
+                                <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+                                    <i class="align-middle fas fa-fw fa-calendar-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-100"></div>
+                    <div class="col-md col-lg-8">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Email</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.email" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="dateOfBirth">Date of birth</label>
+                    <div class="input-group mb-3">
+                        
+                    </div>
+                </div> -->
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click')">Update</button>
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+        </div>
+    </ng-template>
+    <!-- Modal Eidt Customer: End -->
     <router-outlet></router-outlet>
 </div>
 

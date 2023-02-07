@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxLoadingModule } from "ngx-loading";
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { StoreModule } from '@ngrx/store';
-import { LoginReducer, TestReducer } from 'src/_store/page.reducer';
+import { LoginReducer, RoleReducer } from 'src/_store/page.reducer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,7 +48,7 @@ import { SignUpPageComponent } from './auth/sign-up-page/sign-up-page.component'
         }),
         StoreModule.forRoot({ 
             isLogin: LoginReducer,
-            isTest: TestReducer
+            isTest: RoleReducer
         })
     ],
     providers: [],

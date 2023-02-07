@@ -8,4 +8,8 @@ const postListCustomer = (skip: number, limit: number, filter: object) => {
     })
 }
 
-export { postListCustomer };
+const getDetailCustomer = (cifId: any) => {
+    return axios.get(`v1/dashboard/customer/get-detail?cifId=${cifId}`);
+}
+
+export { postListCustomer, getDetailCustomer };
