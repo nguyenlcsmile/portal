@@ -194,7 +194,7 @@ export class CustomerPageComponent implements OnInit {
             this.handleGetListAddressCurrent('district', this.cloneCustomerEdit?.idCurrentProvince).then(res => res).catch(err => err);
         }
 
-        if (this.lastIdCurrentDistrict !== this.cloneCustomerEdit?.idCurrentDistrict && this.onChangeProviceCurrent === false) {
+        if (this.lastIdCurrentDistrict !== this.cloneCustomerEdit?.idCurrentDistrict) {
             // console.log(">>>Check idCurrentDistrict:", this.cloneCustomerEdit?.idCurrentDistrict);
             // console.log(">>>Check lastIdCurrentDistrict:", this.lastIdCurrentDistrict);
             this.lastIdCurrentDistrict = this.cloneCustomerEdit?.idCurrentDistrict;
@@ -212,7 +212,7 @@ export class CustomerPageComponent implements OnInit {
             this.handleGetListAddressPermanent('district', this.cloneCustomerEdit?.idPermanentProvince).then(res => res).catch(err => err);
         }
 
-        if (this.lastIdPermanentDistrict !== this.cloneCustomerEdit?.idPermanentDistrict && this.onChangeProvicePermanent === false) {
+        if (this.lastIdPermanentDistrict !== this.cloneCustomerEdit?.idPermanentDistrict) {
             // console.log(">>>Check idPermanentDistrict:", this.cloneCustomerEdit?.idPermanentDistrict);
             // console.log(">>>Check lastIdPermanentDistrict:", this.lastIdPermanentDistrict);
             this.lastIdPermanentDistrict = this.cloneCustomerEdit?.idPermanentDistrict;
