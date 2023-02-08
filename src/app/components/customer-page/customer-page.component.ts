@@ -250,7 +250,7 @@ export class CustomerPageComponent implements OnInit {
 
     // View detail customer: Start
     async viewCustomerDetail(cifId: any) {
-        await this.handleGetDetailCustomer(cifId);
+        await this.handleGetDetailCustomer(cifId, 'viewCustomer');
         let encodeCustomer = btoa(JSON.stringify(this.customerDetail));
         let encodeDataTotal = btoa(JSON.stringify(this.dataTotal));
         this.router.navigate(['v2/customer-page/detail'], { queryParams: { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } });
@@ -261,10 +261,10 @@ export class CustomerPageComponent implements OnInit {
         // console.log(">>>Check edit customer:", item);
         this.customerEdit = item;
 
-        await this.handleGetDetailCustomer(item.cifId);
+        await this.handleGetDetailCustomer(item.cifId, 'editCustomer');
         this.loading = false;
         // console.log(">>>Check detail customer:", this.customerDetail);
-        
+
         this.cloneCustomerEdit = _.cloneDeep(this.customerEdit);
         this.lastIdCurrentProvince = this.cloneCustomerEdit?.idCurrentProvince;
         this.lastIdCurrentDistrict = this.cloneCustomerEdit?.idCurrentDistrict;
@@ -313,7 +313,7 @@ export class CustomerPageComponent implements OnInit {
             let resAddProvince = await getAddressCustomer(type, id);
             // console.log(">>>Check resAddProvince:", resAddProvince);
             if (resAddProvince && resAddProvince?.status === 200) {
-                this.listProvince =  resAddProvince?.data?.data?.data;
+                this.listProvince = resAddProvince?.data?.data?.data;
                 // console.log(">>>Check listProvince:", this.listProvince);
                 return;
             }
@@ -360,8 +360,8 @@ export class CustomerPageComponent implements OnInit {
             let timeConvert = this.formatter.format(date);
             // console.log(">>>Check timeConvert:", timeConvert, typeof timeConvert);
             return timeConvert;
-        } else if (key == 'ymd-dmw'){
-            return (splitArray[2]+'-'+splitArray[1]+'-'+splitArray[0]).toString();
+        } else if (key == 'ymd-dmw') {
+            return (splitArray[2] + '-' + splitArray[1] + '-' + splitArray[0]).toString();
         }
         else {
             const date: NgbDate = new NgbDate(Number(splitArray[0]), Number(splitArray[1]), Number(splitArray[2]));
@@ -371,7 +371,7 @@ export class CustomerPageComponent implements OnInit {
         }
     }
 
-    handleSelectDay(event: any, type: string){  
+    handleSelectDay(event: any, type: string) {
         // this.cloneCustomerEdit?.identificationDocumentDtls1.issueDate
         let timeConvert = this.formatter.format(event);
         if (type === 'issueDate') this.cloneCustomerEdit.identificationDocumentDtls1.issueDate = timeConvert;
@@ -408,13 +408,15 @@ export class CustomerPageComponent implements OnInit {
         }
     }
 
-    async handleGetDetailCustomer(cifId: any) {
+    async handleGetDetailCustomer(cifId: any, action: string) {
         this.loading = true;
         let res = await getDetailCustomer(cifId);
         // console.log(">>>Check res:", res);
         if (res && res?.status === 200) {
             this.dataTotal = res?.data;
             this.customerDetail = res?.data?.detail;
+            if (action === 'viewCustomer') return;
+
             if (this.customerDetail) {
                 let idProvinceCurrent = Number(this.customerDetail?.customerInqRs?.currentAddrDetails?.province);
                 let idDistrictCurrent = Number(this.customerDetail?.customerInqRs?.currentAddrDetails?.district);
