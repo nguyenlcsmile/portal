@@ -12,6 +12,7 @@ export class CustomerDetailPageComponent implements OnInit {
     public cifId: any;
     public custDetail: any;
     public currentStatus: any;
+    public historyUpdate: any;
     public data: any;
 
     public listURLCustomerPage: any = {
@@ -26,7 +27,8 @@ export class CustomerDetailPageComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             this.custDetail = JSON.parse(atob(params?.encodeCustomer));
             this.data = JSON.parse(atob(params?.dataTotal));
-            console.log(">>>Check data:", this.data);
+            this.historyUpdate = this.data?.history_update;
+            console.log(">>>Check historyUpdate:", this.historyUpdate);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
@@ -36,13 +38,13 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // For header KYC Information >>>>> Start >>>>>> devquiphan
-    handleReasonStatusforKYCInfor(custDetail:any){
-        if(custDetail['customerInqRs']) {
+    handleReasonStatusforKYCInfor(custDetail: any) {
+        if (custDetail['customerInqRs']) {
             let customer_inqr = custDetail['customerInqRs'];
             // console.log("Check customerInqRs>>>",customer_inqr);
             let current_status = "";
             // console.log("Check PIDStatus>>>",customer_inqr['PIDStatus'] ? customer_inqr['PIDStatus'] : null);
-            if(customer_inqr['PIDStatus']) {
+            if (customer_inqr['PIDStatus']) {
                 let pid_status = customer_inqr['PIDStatus'];
                 // console.log("Check PIDStatus>>>",pid_status);
                 if (pid_status === 'C') {
@@ -52,74 +54,74 @@ export class CustomerDetailPageComponent implements OnInit {
                 } else if (pid_status === 'HR') {
                     current_status = "KYC rejected"
                 } else {
-                if (custDetail['signCasa']) {
-                    let sign_casa = custDetail['signCasa'];
-                    if (sign_casa == 'yes') {
-                        current_status = 'KYC Success - Sign Casa Success';
-                    } else if(sign_casa == 'fail'){
-                    if (custDetail['reason_fail']) {
-                        let reason_fail = custDetail['reason_fail'];
-                        let reason_detail = 'FAIL OTP';
-                        if (reason_fail) {
-                            let split_reason = reason_fail.split('&')
-                            if (split_reason[0] == 'failFace') {
-                                reason_detail = 'FAIL FACE MATCHING';
-                            }
-                        }
-                        current_status =  'KYC Success - Sign Casa is block ' + reason_detail
-                    } else if (sign_casa == 'generate') {
-                        current_status = 'KYC Success - Waiting customer sign Casa';
-                    } else {
-                        let uuid_kyc = custDetail['uuid_kyc'];
-                        let identify2 = customer_inqr['identificationDocumentDtls2'];
-                        let pid = identify2 ? identify2['uniqueId'] : '';
-                        if (pid && uuid_kyc) {
-                            current_status = "KYC Successfully";
-                        } else if (pid) {
-                            current_status = "KYC success";
-                        } else if (uuid_kyc) {
-                        if(custDetail['uuid_pid']){
-                            let uuid_pid = custDetail['uuid_pid'];
-                            if (uuid_pid) {
-                            if (custDetail['status_pid']) {
-                                let status_pid = custDetail['status_pid'];
-                                // console.log('TEST 1')
-                                if (status_pid != 'success') {
-                                    current_status = "Error when call PID";
-                                } else {
-                                    // console.log('TEST 2')
-                                    if (custDetail['data_pid']) {
-                                        let data_pid = custDetail['data_pid'];
-                                        if (data_pid) {
-                                        // console.log('TEST 3')
-                                        if (data_pid['data']) {
-                                            let data_param = data_pid['data'];
-                                            // console.log('TEST 4', data_param)
-                                            if (data_param) {
-                                                // console.log('TEST 5')
-                                                current_status = "Problem with Finacle - cannot update PID";
-                                            } else {
-                                                // console.log('TEST 6')
-                                                current_status = "Waiting PID from ROBO";
-                                            }
-                                        }
-                                        } else {
-                                            // console.log('TEST 7')
-                                            current_status = "Waiting PID from ROBO";
-                                        }
+                    if (custDetail['signCasa']) {
+                        let sign_casa = custDetail['signCasa'];
+                        if (sign_casa == 'yes') {
+                            current_status = 'KYC Success - Sign Casa Success';
+                        } else if (sign_casa == 'fail') {
+                            if (custDetail['reason_fail']) {
+                                let reason_fail = custDetail['reason_fail'];
+                                let reason_detail = 'FAIL OTP';
+                                if (reason_fail) {
+                                    let split_reason = reason_fail.split('&')
+                                    if (split_reason[0] == 'failFace') {
+                                        reason_detail = 'FAIL FACE MATCHING';
                                     }
                                 }
-                            }
+                                current_status = 'KYC Success - Sign Casa is block ' + reason_detail
+                            } else if (sign_casa == 'generate') {
+                                current_status = 'KYC Success - Waiting customer sign Casa';
                             } else {
-                                current_status = "Stuck when call PID";
+                                let uuid_kyc = custDetail['uuid_kyc'];
+                                let identify2 = customer_inqr['identificationDocumentDtls2'];
+                                let pid = identify2 ? identify2['uniqueId'] : '';
+                                if (pid && uuid_kyc) {
+                                    current_status = "KYC Successfully";
+                                } else if (pid) {
+                                    current_status = "KYC success";
+                                } else if (uuid_kyc) {
+                                    if (custDetail['uuid_pid']) {
+                                        let uuid_pid = custDetail['uuid_pid'];
+                                        if (uuid_pid) {
+                                            if (custDetail['status_pid']) {
+                                                let status_pid = custDetail['status_pid'];
+                                                // console.log('TEST 1')
+                                                if (status_pid != 'success') {
+                                                    current_status = "Error when call PID";
+                                                } else {
+                                                    // console.log('TEST 2')
+                                                    if (custDetail['data_pid']) {
+                                                        let data_pid = custDetail['data_pid'];
+                                                        if (data_pid) {
+                                                            // console.log('TEST 3')
+                                                            if (data_pid['data']) {
+                                                                let data_param = data_pid['data'];
+                                                                // console.log('TEST 4', data_param)
+                                                                if (data_param) {
+                                                                    // console.log('TEST 5')
+                                                                    current_status = "Problem with Finacle - cannot update PID";
+                                                                } else {
+                                                                    // console.log('TEST 6')
+                                                                    current_status = "Waiting PID from ROBO";
+                                                                }
+                                                            }
+                                                        } else {
+                                                            // console.log('TEST 7')
+                                                            current_status = "Waiting PID from ROBO";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            current_status = "Stuck when call PID";
+                                        }
+                                    }
+                                } else {
+                                    current_status = "Missing PID";
+                                }
                             }
                         }
-                        } else {
-                            current_status = "Missing PID";
-                        }
                     }
-                    }
-                }
                 }
                 this.currentStatus = current_status;
             }
@@ -127,7 +129,7 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // Set color for AML
-    setColor(value:any){
+    setColor(value: any) {
         if (value) {
             if (value === 'N/A') {
                 return 'badge bg-light';
@@ -144,24 +146,27 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // get name for AML->final risk && historyUpdate value old and new
-    getNameforFinalRisk(value:any){
+    getNameforFinalRisk(value: any, type: string) {
+        if (type === 'old') value = value.old;
+        if (type === 'new') value = value.new;
+
         if (value) {
-            if (value == 'N/A') {
+            if (value === 'N/A') {
                 return 'N/A';
-            } else if (value == 'low') {
+            } else if (value === 'low') {
                 return 'LOW RISK';
-            } else if (value == 'high') {
+            } else if (value === 'high') {
                 return 'HIGH RISK';
-            } else if (value == 'typical_high') {
+            } else if (value === 'typical_high') {
                 return 'TYPICAL HIGH RISK';
-            } else if (value == 'default_high') {
+            } else if (value === 'default_high') {
                 return 'DEFAULT HIGH RISK';
             }
         }
         return "";
     }
     // get Name for Field of History Update
-    getNameKeyofHisUpdate(key:any) {
+    getNameKeyofHisUpdate(key: any) {
         if (key == 'riskBlckLst') {
             return 'Black List Risk'
         } else if (key == 'riskPEP') {

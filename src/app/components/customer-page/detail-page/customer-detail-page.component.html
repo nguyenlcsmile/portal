@@ -238,7 +238,7 @@
                                                 <td><span class="text-uppercase" [class]="setColor(custDetail?.riskOccu)">{{custDetail?.riskOccu}}</span></td>
                                                 <td><span class="text-uppercase" [class]="setColor(custDetail?.riskTrans)">{{custDetail?.riskTrans}}</span></td>
                                                 <td><span class="text-uppercase" [class]="setColor(custDetail?.riskSrvReq)">{{custDetail?.riskSrvReq}}</span></td>
-                                                <td><span [class]="setColor(custDetail?.finalRisk)">{{ getNameforFinalRisk(custDetail?.finalRisk) }}</span></td>
+                                                <td><span [class]="setColor(custDetail?.finalRisk)">{{ getNameforFinalRisk(custDetail?.finalRisk, '') }}</span></td>
                                             </tr>        
                                         </tbody>
                                     </table>
@@ -257,11 +257,11 @@
                                                 <tr *ngFor="let items of data?.history_update">
                                                     <td>{{items?.user || 'System Init'}}</td>
                                                     <td>{{items?.createdAt}}</td>
-                                                    <td >  
+                                                    <td>  
                                                         <div *ngFor="let log of items.logs | keyvalue">
                                                             <p style="font-weight: bold;">Field: {{getNameKeyofHisUpdate(log.key)}}</p>
-                                                            <p style="font-weight: bold;">New value: {{getNameforFinalRisk(log.value)}}</p>
-                                                            <p style="font-weight: bold;">Old value: {{getNameforFinalRisk(log.value)}}</p>
+                                                            <p style="font-weight: bold;">New value: {{getNameforFinalRisk(log.value, 'new')}}</p>
+                                                            <p style="font-weight: bold;">Old value: {{getNameforFinalRisk(log.value, 'old')}}</p>
                                                         </div>
                                                     </td>
                                                 </tr>        
