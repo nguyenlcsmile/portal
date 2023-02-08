@@ -15,7 +15,6 @@ Amplify.configure(configAppSync);
 })
 
 export class AppComponent {
-    // @ViewChild(LoginPageComponent) LoginPage!: LoginPageComponent;
     public title: string = 'DemoPortalV2';
     public access_token: any;
     public isLoginPage: any = false;

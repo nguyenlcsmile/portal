@@ -219,21 +219,32 @@
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
-                                <button class="btn btn-secondary" type="button">CIF</button>
+                                <button class="btn btn-secondary" type="button">First Name</button>
                                 <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.cifId" [ngModelOptions]="{standalone: true}">
+                                    [(ngModel)]="cloneCustomerEdit.firstName" [ngModelOptions]="{standalone: true}">
                             </div>
                         </div>
                     </div>
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
-                                <button class="btn btn-secondary" type="button">Full Name</button>
+                                <button class="btn btn-secondary" type="button">Middle Name</button>
                                 <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.fullName" [ngModelOptions]="{standalone: true}">
+                                    [(ngModel)]="cloneCustomerEdit.middleName" [ngModelOptions]="{standalone: true}">
                             </div>
                         </div>
                     </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Last Name</button>
+                                <input type="text" class="form-control" 
+                                    [(ngModel)]="cloneCustomerEdit.lastName" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-100"></div>
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
@@ -245,22 +256,12 @@
                         </div>
                     </div>
 
-                    <div class="w-100"></div>
                     <div class="col-md col-lg-4">
                         <div class="mb-3">
                             <div class="input-group">
                                 <button class="btn btn-secondary" type="button">Phone</button>
-                                <input type="text" class="form-control" 
+                                <input type="text" class="form-control" disabled
                                     [(ngModel)]="cloneCustomerEdit.phoneNo" [ngModelOptions]="{standalone: true}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md col-lg-4">
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <button class="btn btn-secondary" type="button">nid</button>
-                                <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.nid" [ngModelOptions]="{standalone: true}">
                             </div>
                         </div>
                     </div>
@@ -274,6 +275,7 @@
                                     placeholder="YYYY-MM-DD"
                                     name="dp"
                                     [value]="cloneCustomerEdit.dob"
+                                    (dateSelect)="handleSelectDay($event, 'dob')"
                                     ngbDatepicker
                                     #dp="ngbDatepicker"
                                 />
@@ -286,52 +288,130 @@
 
                     <div class="w-100"></div>
                     <div class="col-md col-lg-12">
+                        <label class="form-label fs-4"><h5 style="font-size: 16px; font-weight: 550;">Current Address</h5></label>
                         <div class="mb-3">
                             <div class="input-group">
-                                <button class="btn btn-secondary" type="button">Current Address</button>
+                                <button class="btn btn-secondary" type="button">Address</button>
                                 <input type="text" class="form-control" 
                                     [(ngModel)]="cloneCustomerEdit.currentAddrDetails.addressLine1" 
                                     [ngModelOptions]="{standalone: true}">
                                 
                                 <button class="btn btn-secondary" type="button">Ward</button>
-                                <select class="form-select">
-                                    <option>Select...</option>
-                                    <option>One</option>
-                                    <option>Two</option>
-                                    <option>Three</option>
+                                <select [(ngModel)]="cloneCustomerEdit.idCurrentWard" 
+                                        [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeDistrictCurrent || onChangeProviceCurrent">
+                                    <option *ngFor="let item of listWardCurrent" [ngValue]="item.f_w_code">{{item.name_en}}</option>
                                 </select>
+
                                 <button class="btn btn-secondary" type="button">District</button>
-                                <select class="form-select">
-                                    <option>Select...</option>
-                                    <option>One</option>
-                                    <option>Two</option>
-                                    <option>Three</option>
+                                <select [(ngModel)]="cloneCustomerEdit.idCurrentDistrict" 
+                                        [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeProviceCurrent">
+                                    <option *ngFor="let item of listDistrictCurrent" [ngValue]="item.f_d_code">{{item.name_en}}</option>
+                                </select>
+
+                                <button class="btn btn-secondary" type="button">Province</button>
+                                <select [(ngModel)]="cloneCustomerEdit.idCurrentProvince" [ngModelOptions]="{standalone: true}" class="form-select">
+                                    <option *ngFor="let item of listProvince" [ngValue]="item.f_p_code">{{item.name_en}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-md col-lg-12">
                         <div class="mb-3">
-                            <div class="input-group">
-                                <button class="btn btn-secondary" type="button">Current Address</button>
-                                <input type="text" class="form-control" 
-                                    [(ngModel)]="cloneCustomerEdit.permanentAddrDetails.addressLine1" 
-                                    [ngModelOptions]="{standalone: true}">
+                            <label class="form-label fs-4"><h5 style="font-size: 16px; font-weight: 550;">Permanent Address</h5></label>
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <button class="btn btn-secondary" type="button">Address</button>
+                                    <input type="text" class="form-control" 
+                                        [(ngModel)]="cloneCustomerEdit.permanentAddrDetails.addressLine1" 
+                                        [ngModelOptions]="{standalone: true}">
+                                    
+                                    <button class="btn btn-secondary" type="button">Ward</button>
+                                    <select [(ngModel)]="cloneCustomerEdit.idPermanentWard" 
+                                            [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeDistrictPermanent || onChangeProvicePermanent">
+                                        <option *ngFor="let item of listWardPermanent" [ngValue]="item.f_w_code">{{item.name_en}}</option>
+                                    </select>
+    
+                                    <button class="btn btn-secondary" type="button">District</button>
+                                    <select [(ngModel)]="cloneCustomerEdit.idPermanentDistrict" 
+                                            [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeProvicePermanent">
+                                        <option *ngFor="let item of listDistrictPermanent" [ngValue]="item.f_d_code">{{item.name_en}}</option>
+                                    </select>
+    
+                                    <button class="btn btn-secondary" type="button">Province</button>
+                                    <select [(ngModel)]="cloneCustomerEdit.idPermanentProvince" [ngModelOptions]="{standalone: true}" class="form-select">
+                                        <option *ngFor="let item of listProvince" [ngValue]="item.f_p_code">{{item.name_en}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                <button class="btn btn-secondary" type="button">Ward</button>
-                                <select class="form-select">
-                                    <option>Select...</option>
-                                    <option>One</option>
-                                    <option>Two</option>
-                                    <option>Three</option>
-                                </select>
-                                <button class="btn btn-secondary" type="button">District</button>
-                                <select class="form-select">
-                                    <option>Select...</option>
-                                    <option>One</option>
-                                    <option>Two</option>
-                                    <option>Three</option>
-                                </select>
+                    <label class="form-label fs-4"><h5 style="font-size: 16px; font-weight: 550;">Identification</h5></label>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <button class="btn btn-secondary" type="button">Unique Id</button>
+                                    <input type="text" class="form-control" 
+                                        [(ngModel)]="cloneCustomerEdit.identificationDocumentDtls1.uniqueId" 
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Issuse Date</button>
+                                <input
+                                    id="dateIssuse"
+                                    class="form-control"
+                                    placeholder="YYYY-MM-DD"
+                                    name="dpDateIssuse"
+                                    [value]="(cloneCustomerEdit?.identificationDocumentDtls1?.issueDate)"
+                                    (dateSelect)="handleSelectDay($event, 'issueDate')"
+                                    ngbDatepicker
+                                    #dpIssuse="ngbDatepicker"
+                                />
+
+                                <button class="btn btn-outline-secondary" (click)="dpIssuse.toggle()" type="button">
+                                    <i class="align-middle fas fa-fw fa-calendar-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md col-lg-4">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn btn-secondary" type="button">Expire Date</button>
+                                <input
+                                    id="dateExpire"
+                                    class="form-control"
+                                    placeholder="YYYY-MM-DD"
+                                    name="dp"
+                                    [value]="(cloneCustomerEdit?.identificationDocumentDtls1?.expiryDate)"
+                                    (dateSelect)="handleSelectDay($event, 'expireDate')"
+                                    ngbDatepicker
+                                    #dpExpire="ngbDatepicker"
+                                />
+                                <button class="btn btn-outline-secondary" (click)="dpExpire.toggle()" type="button">
+                                    <i class="align-middle fas fa-fw fa-calendar-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-100"></div>
+                    <div class="col-md col-lg-12">
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <button class="btn btn-secondary" type="button">Place of Issue</button>
+                                    <select [(ngModel)]="cloneCustomerEdit.identificationDocumentDtls1.placeOfIssue" [ngModelOptions]="{standalone: true}" class="form-select">
+                                        <option *ngFor="let item of listProvince" [ngValue]="item.f_p_code">{{item.name_en}}</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -339,11 +419,22 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click')">Update</button>
+            <button type="button" class="btn btn-outline-primary" (click)="handleUpdateCustomer(modal)">Update</button>
             <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
         </div>
     </ng-template>
     <!-- Modal Eidt Customer: End -->
+
+    <ngx-loading
+		[show]="loading"
+		[config]="{
+			animationType: ngxLoadingAnimationTypes.circleSwish,
+			primaryColour: primaryColour,
+			backdropBorderRadius: '3px',
+            fullScreenBackdrop: true
+		}">
+	</ngx-loading>
+    
     <router-outlet></router-outlet>
 </div>
 
