@@ -298,13 +298,13 @@
                                 
                                 <button class="btn btn-secondary" type="button">Ward</button>
                                 <select [(ngModel)]="cloneCustomerEdit.idCurrentWard" 
-                                        [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeDistrictCurrent || onChangeProviceCurrent">
+                                        [ngModelOptions]="{standalone: true}" class="form-select">
                                     <option *ngFor="let item of listWardCurrent" [ngValue]="item.f_w_code">{{item.name_en}}</option>
                                 </select>
 
                                 <button class="btn btn-secondary" type="button">District</button>
                                 <select [(ngModel)]="cloneCustomerEdit.idCurrentDistrict" 
-                                        [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeProviceCurrent">
+                                        [ngModelOptions]="{standalone: true}" class="form-select">
                                     <option *ngFor="let item of listDistrictCurrent" [ngValue]="item.f_d_code">{{item.name_en}}</option>
                                 </select>
 
@@ -327,13 +327,13 @@
                                     
                                     <button class="btn btn-secondary" type="button">Ward</button>
                                     <select [(ngModel)]="cloneCustomerEdit.idPermanentWard" 
-                                            [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeDistrictPermanent || onChangeProvicePermanent">
+                                            [ngModelOptions]="{standalone: true}" class="form-select">
                                         <option *ngFor="let item of listWardPermanent" [ngValue]="item.f_w_code">{{item.name_en}}</option>
                                     </select>
     
                                     <button class="btn btn-secondary" type="button">District</button>
                                     <select [(ngModel)]="cloneCustomerEdit.idPermanentDistrict" 
-                                            [ngModelOptions]="{standalone: true}" class="form-select" [disabled]="onChangeProvicePermanent">
+                                            [ngModelOptions]="{standalone: true}" class="form-select">
                                         <option *ngFor="let item of listDistrictPermanent" [ngValue]="item.f_d_code">{{item.name_en}}</option>
                                     </select>
     
@@ -426,14 +426,14 @@
     <!-- Modal Eidt Customer: End -->
 
     <ngx-loading
-		[show]="loading"
-		[config]="{
-			animationType: ngxLoadingAnimationTypes.circleSwish,
-			primaryColour: primaryColour,
-			backdropBorderRadius: '3px',
+        [show]="loading"
+        [config]="{
+            animationType: ngxLoadingAnimationTypes.circleSwish,
+            primaryColour: primaryColour,
+            backdropBorderRadius: '3px',
             fullScreenBackdrop: true
-		}">
-	</ngx-loading>
+        }">
+    </ngx-loading>
     
     <router-outlet></router-outlet>
 </div>

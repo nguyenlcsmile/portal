@@ -29,7 +29,7 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    console.log(">>>Check error res:", error);
+    // console.log(">>>Check error res:", error);
     if (error && error?.response) {
         let message = error?.response?.data?.message;
         let status = error?.response?.status;
@@ -40,7 +40,7 @@ instance.interceptors.response.use(function (response) {
             return;
         }
     }
-    return error && error.response && error.response.data ? error.response.data : Promise.reject(error);
+    return error && error.response ? error.response : error;
 });
 
 export default instance;

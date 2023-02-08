@@ -49,6 +49,7 @@ export class CustomerPageComponent implements OnInit {
     public lastIdPermanentDistrict: any;
     public onChangeProvicePermanent: boolean = true;
     public onChangeDistrictPermanent: boolean = true;
+    public isCheckEmpty: boolean = false;
     // Variable address Current Edit: End
 
     public listURLCustomerPage: any = {
@@ -191,10 +192,12 @@ export class CustomerPageComponent implements OnInit {
             // console.log(">>>Check lastIdCurrentProvince:", this.lastIdCurrentProvince);
             this.lastIdCurrentProvince = this.cloneCustomerEdit?.idCurrentProvince;
             this.onChangeProviceCurrent = false;
+            this.listWardCurrent = [];
+            this.listDistrictCurrent = [];
             this.handleGetListAddressCurrent('district', this.cloneCustomerEdit?.idCurrentProvince).then(res => res).catch(err => err);
         }
 
-        if (this.lastIdCurrentDistrict !== this.cloneCustomerEdit?.idCurrentDistrict && this.onChangeProviceCurrent === false) {
+        if (this.lastIdCurrentDistrict !== this.cloneCustomerEdit?.idCurrentDistrict) {
             // console.log(">>>Check idCurrentDistrict:", this.cloneCustomerEdit?.idCurrentDistrict);
             // console.log(">>>Check lastIdCurrentDistrict:", this.lastIdCurrentDistrict);
             this.lastIdCurrentDistrict = this.cloneCustomerEdit?.idCurrentDistrict;
@@ -209,10 +212,12 @@ export class CustomerPageComponent implements OnInit {
             // console.log(">>>Check lastIdPermanentProvince:", this.lastIdPermanentProvince);
             this.lastIdPermanentProvince = this.cloneCustomerEdit?.idPermanentProvince;
             this.onChangeProvicePermanent = false;
+            this.listWardPermanent = [];
+            this.listDistrictPermanent = [];
             this.handleGetListAddressPermanent('district', this.cloneCustomerEdit?.idPermanentProvince).then(res => res).catch(err => err);
         }
 
-        if (this.lastIdPermanentDistrict !== this.cloneCustomerEdit?.idPermanentDistrict && this.onChangeProvicePermanent === false) {
+        if (this.lastIdPermanentDistrict !== this.cloneCustomerEdit?.idPermanentDistrict) {
             // console.log(">>>Check idPermanentDistrict:", this.cloneCustomerEdit?.idPermanentDistrict);
             // console.log(">>>Check lastIdPermanentDistrict:", this.lastIdPermanentDistrict);
             this.lastIdPermanentDistrict = this.cloneCustomerEdit?.idPermanentDistrict;
@@ -516,13 +521,25 @@ export class CustomerPageComponent implements OnInit {
             permanentAddrDetails: this.cloneCustomerEdit?.permanentAddrDetails,
             identificationDocumentDtls1: this.cloneCustomerEdit?.identificationDocumentDtls1
         }
-        // console.log(">>>Check dataUpate:", dataUpdate);
+        console.log(">>>Check dataUpate:", dataUpdate);
 
         this.loading = true;
-        let res = await postUpdateCustomer(dataUpdate, cifId);
-        if (res && res?.status === 200) {
+        if (this.listDistrictCurrent.length !== 0 && this.listDistrictPermanent.length !== 0 && this.listWardCurrent.length !== 0 && this.listWardPermanent !== 0) {
+            let res = await postUpdateCustomer(dataUpdate, cifId);
+            console.log(">>>Check res:", res);
+
+            if (res && res?.status === 200) {
+                this.loading = false;
+                modal.close('Save click');
+            } else {
+                let message = res?.data?.message;
+                if (message === "Error when update data") {
+                    this.loading = false;
+                }
+            }
+        } else {
             this.loading = false;
-            modal.close('Save click');
+            this.isCheckEmpty = true;
         }
     }
 }
