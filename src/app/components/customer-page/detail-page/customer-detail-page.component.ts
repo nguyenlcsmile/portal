@@ -12,6 +12,7 @@ export class CustomerDetailPageComponent implements OnInit {
     public cifId: any;
     public custDetail: any;
     public currentStatus: any;
+    public historyUpdate: any;
     public data: any;
 
     public listURLCustomerPage: any = {
@@ -26,7 +27,8 @@ export class CustomerDetailPageComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             this.custDetail = JSON.parse(atob(params?.encodeCustomer));
             this.data = JSON.parse(atob(params?.dataTotal));
-            console.log(">>>Check data:", this.data);
+            this.historyUpdate = this.data?.history_update;
+            console.log(">>>Check historyUpdate:", this.historyUpdate);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
@@ -144,7 +146,7 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // get name for AML->final risk && historyUpdate value old and new
-    getNameforFinalRisk(value:any){
+    getNameforFinalRisk(value: any){
         if (value) {
             if (value == 'N/A') {
                 return 'N/A';
