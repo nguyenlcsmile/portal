@@ -15,4 +15,12 @@ const getDetailCustomer = (cifId: any) => {
 const getAddressCustomer = (type: any, id: any) => {
     return axios.get(`v1/dashboard/customer/list-address?type=${type}&id=${id}`);
 }
-export { postListCustomer, getDetailCustomer, getAddressCustomer };
+
+const postUpdateCustomer = (dataUpdate: any, cif: any) => {
+    return axios.post('v1/dashboard/customer/edit-info', {
+        cifId: cif,
+        data: dataUpdate
+    });
+}
+
+export { postListCustomer, getDetailCustomer, getAddressCustomer, postUpdateCustomer };
