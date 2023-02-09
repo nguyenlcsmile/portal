@@ -261,7 +261,12 @@ export class CustomerPageComponent implements OnInit {
         await this.handleGetDetailCustomer(cifId, 'viewCustomer');
         let encodeCustomer = btoa(unescape(encodeURIComponent(JSON.stringify(this.customerDetail))));
         let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
-        this.router.navigate(['v2/customer-page/detail'], { queryParams: { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } });
+
+        // console.log(">>>Check isCheckErrorData", this.isCheckErrorData);
+        this.loading = false;
+        if (this.isCheckErrorData === false) {
+            this.router.navigate(['v2/customer-page/detail'], { queryParams: { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } });
+        }
     }
     // View detail customer: End
 
@@ -421,7 +426,7 @@ export class CustomerPageComponent implements OnInit {
     async handleGetDetailCustomer(cifId: any, action: string) {
         this.loading = true;
         let res = await getDetailCustomer(cifId);
-        
+
         if (res && res?.status === 200) {
             this.dataTotal = res?.data;
             this.customerDetail = res?.data?.detail;
@@ -537,12 +542,12 @@ export class CustomerPageComponent implements OnInit {
             // console.log(">>>Check res:", res);
             if (res && res?.status === 200) {
                 this.loading = false;
-                console.log("Check filter:", this.filter);
+                // console.log("Check filter:", this.filter);
                 modal.close('Save click');
                 await this.fetchListCustomer(0, 10, this.filter);
                 await this.fetchListCustomer(0, 10, this.filter);
                 await this.fetchListCustomer(0, 10, this.filter);
-                console.log(">>>Check list customer:", this.listCustomers);
+                // console.log(">>>Check list customer:", this.listCustomers);
             } else {
                 let message = res?.data?.message;
                 if (message === "Error when update data") {
