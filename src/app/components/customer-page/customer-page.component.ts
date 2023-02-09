@@ -160,9 +160,7 @@ export class CustomerPageComponent implements OnInit {
         this.config.backdrop = 'static';
         this.config.keyboard = false;
         this.config.size = 'xl';
-
         this.encodeIsRoleEdit = this.location.getState();
-
     }
 
     ngOnDestroy() { }
@@ -176,21 +174,23 @@ export class CustomerPageComponent implements OnInit {
         // console.log(">>>Check isRoleEdit:", this.encodeIsRoleEdit.isRoleEdit);
         if (this.encodeIsRoleEdit && this.encodeIsRoleEdit.isRoleEdit) {
             this.isRoleEdit = JSON.parse(decodeURIComponent(escape(window.atob(this.encodeIsRoleEdit?.isRoleEdit))));
-            if (this.isRoleEdit) this.store.dispatch(handleRoleAction());
         }
+        if (this.isRoleEdit) this.store.dispatch(handleRoleAction());
     }
 
     ngAfterViewInit() {
         this.fetchListCustomer(this.currentPage - 1, 10, this.filter);
+        // Check role edit
+        if (!this.isRoleEdit) {
+            this.store.select('isEdit').subscribe(res => {
+                this.isRoleEdit = res;
+            })
+        }
     }
 
     ngDoCheck() {
+        // console.log(">>>Check isRoleEdit:", this.isRoleEdit);
         this.checkRouter();
-        // Check role edit
-
-        this.store.select('isEdit').subscribe(res => {
-            this.isRoleEdit = res;
-        })
 
         if (this.lastCurrentPage !== this.currentPage) {
             // console.log("Check last:", this.lastCurrentPage);
