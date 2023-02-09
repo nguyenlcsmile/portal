@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { getDetailCustomer } from '../customer-page.service';
+import { getImageS3 } from '../customer-page.service';
 
 @Component({
     selector: 'app-detail-page',
@@ -15,6 +15,13 @@ export class CustomerDetailPageComponent implements OnInit {
     public historyUpdate: any;
     public data: any;
 
+    // devphq >>>>> Start
+    public image: any;
+    public imageFrontNID: any; 
+    public imageBackNID: any;
+    public kycSubmit: any;
+    // devphq >>>>> End
+
     public listURLCustomerPage: any = {
         'detail': false,
         'card': false
@@ -25,16 +32,17 @@ export class CustomerDetailPageComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         this.route.queryParams.subscribe(params => {
-            this.custDetail = JSON.parse(atob(params?.encodeCustomer));
-            this.data = JSON.parse(atob(params?.dataTotal));
+            this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
+            this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
             this.historyUpdate = this.data?.history_update;
-            console.log(">>>Check historyUpdate:", this.historyUpdate);
+            console.log(">>>Check historyUpdate:", this.data);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
 
     ngOnInit(): void {
         // this.getDetailCustomer(this.cifId);
+        this.getImageS3forDocument(this.data);
     }
 
     // For header KYC Information >>>>> Start >>>>>> devquiphan
@@ -168,13 +176,33 @@ export class CustomerDetailPageComponent implements OnInit {
     // get Name for Field of History Update
     getNameKeyofHisUpdate(key: any) {
         if (key == 'riskBlckLst') {
-            return 'Black List Risk'
+            return 'Black List Risk';
         } else if (key == 'riskPEP') {
-            return 'PEP List Risk'
+            return 'PEP List Risk';
         } else if (key == 'finalRisk') {
-            return 'Final Risk'
+            return 'Final Risk';
         } else {
-            return 'Occupation Risk'
+            return 'Occupation Risk';
+        }
+    }
+
+    // get Image
+    async getImageS3forDocument(data:any){
+        console.log("ChecK data for get Image>>>", data);
+        this.kycSubmit = data.kyc_submit;
+        if(this.kycSubmit){
+            if(this.kycSubmit.selfie){
+                let res = await getImageS3(this.kycSubmit.selfie);
+                this.image = "data:image/jpeg;base64," + res.data;
+            }
+            if (this.kycSubmit.frontNid) {
+              let res = await getImageS3(this.kycSubmit.frontNid);
+              this.imageFrontNID = "data:image/jpeg;base64," + res.data;
+            }
+            if (this.kycSubmit.backNid) {
+              let res = await getImageS3(this.kycSubmit.frontNid);
+              this.imageBackNID = "data:image/jpeg;base64," + res.data;
+            }
         }
     }
 }

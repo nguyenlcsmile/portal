@@ -281,7 +281,12 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Portrait</h5>
                                         </div>
-                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        <div *ngIf="image == '' && kycSubmit">
+                                            <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        </div>
+                                        <div *ngIf="image != ''">
+                                            <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
@@ -289,7 +294,12 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Front ID</h5>
                                         </div>
-                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        <div *ngIf="imageFrontNID == '' && kycSubmit">
+                                            <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        </div>
+                                        <div *ngIf="imageFrontNID != ''">
+                                            <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
@@ -297,7 +307,12 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Back ID</h5>
                                         </div>
-                                        <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        <div *ngIf="imageBackNID == '' && kycSubmit">
+                                            <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        </div>
+                                        <div *ngIf="imageBackNID != ''">
+                                            <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
