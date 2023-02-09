@@ -10,7 +10,6 @@ import { getDetailCustomer, getAddressCustomer, postUpdateCustomer } from './cus
 import { getUserDetail } from 'src/app/app.service';
 import { handleRoleAction } from 'src/_store/page.actions';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: 'app-customer-page',
