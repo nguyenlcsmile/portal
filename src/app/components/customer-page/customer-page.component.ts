@@ -10,6 +10,7 @@ import { getDetailCustomer, getAddressCustomer, postUpdateCustomer } from './cus
 import { getUserDetail } from 'src/app/app.service';
 import { handleRoleAction } from 'src/_store/page.actions';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
     selector: 'app-customer-page',
@@ -50,6 +51,8 @@ export class CustomerPageComponent implements OnInit {
     public onChangeProvicePermanent: boolean = true;
     public onChangeDistrictPermanent: boolean = true;
     public isCheckEmpty: boolean = false;
+    public isCheckErrorData: boolean = false;
+    public isCheckUpdateData: boolean = false;
     // Variable address Current Edit: End
 
     public listURLCustomerPage: any = {
@@ -139,7 +142,7 @@ export class CustomerPageComponent implements OnInit {
     ]
     // Variable listUser
     public dataTotal: any;
-    public listUsers: any;
+    public listCustomers: any;
     public customerEdit: any = {};
     public customerDetail: any;
     public cloneCustomerEdit: any = {};
@@ -167,7 +170,7 @@ export class CustomerPageComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        this.fetchListCustomer(this.currentPage - 1, 10, {});
+        this.fetchListCustomer(this.currentPage - 1, 10, this.filter);
     }
 
     ngDoCheck() {
@@ -178,7 +181,7 @@ export class CustomerPageComponent implements OnInit {
             // console.log("Check current:", this.currentPage);
             this.lastCurrentPage = this.currentPage;
             let skip = (this.currentPage - 1) * 10;
-            this.fetchListCustomer(skip, 10, {}).then(res => res).catch(err => err);
+            this.fetchListCustomer(skip, 10, this.filter).then(res => res).catch(err => err);
         }
 
         // Check role edit
@@ -256,8 +259,8 @@ export class CustomerPageComponent implements OnInit {
     // View detail customer: Start
     async viewCustomerDetail(cifId: any) {
         await this.handleGetDetailCustomer(cifId, 'viewCustomer');
-        let encodeCustomer = btoa(JSON.stringify(this.customerDetail));
-        let encodeDataTotal = btoa(JSON.stringify(this.dataTotal));
+        let encodeCustomer = btoa(unescape(encodeURIComponent(JSON.stringify(this.customerDetail))));
+        let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
         this.router.navigate(['v2/customer-page/detail'], { queryParams: { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } });
     }
     // View detail customer: End
@@ -265,7 +268,7 @@ export class CustomerPageComponent implements OnInit {
     async editCustomerDetail(content: any, item: any) {
         // console.log(">>>Check edit customer:", item);
         this.customerEdit = item;
-
+        this.isCheckErrorData = false;
         await this.handleGetDetailCustomer(item.cifId, 'editCustomer');
         this.loading = false;
         // console.log(">>>Check detail customer:", this.customerDetail);
@@ -389,13 +392,15 @@ export class CustomerPageComponent implements OnInit {
     async fetchListCustomer(skip: number, limit: number, filter: object) {
         // console.log(">>>Check currentPage:", this.currentPage);
         let res = await postListCustomer(skip, limit, filter);
-        // console.log("Check res:", res);
+        // console.log("Check res listCustomer:", res);
+
         if (res && res?.status === 200) {
             this.totalPage = res?.data?.total;
-            this.listUsers = res?.data?.hits;
-            this.clearInputSearch();
+            this.listCustomers = res?.data?.hits;
+            return;
+            // this.clearInputSearch();
         }
-        // console.log(">>>Check listUsers:", this.listUsers, this.totalPage);
+        // console.log(">>>Check listCustomers:", this.listCustomers, this.totalPage);
         return res;
     }
 
@@ -416,7 +421,7 @@ export class CustomerPageComponent implements OnInit {
     async handleGetDetailCustomer(cifId: any, action: string) {
         this.loading = true;
         let res = await getDetailCustomer(cifId);
-        // console.log(">>>Check res:", res);
+        
         if (res && res?.status === 200) {
             this.dataTotal = res?.data;
             this.customerDetail = res?.data?.detail;
@@ -464,6 +469,8 @@ export class CustomerPageComponent implements OnInit {
                 }
                 //Get Permanent address: end
             }
+        } else {
+            this.isCheckErrorData = true;
         }
     }
 
@@ -473,6 +480,7 @@ export class CustomerPageComponent implements OnInit {
             kyc_type: null, diffRisk: null, finalRisk: null, segment: null, subsegment: null,
             dob: null
         };
+        this.fetchListCustomer(0, 10, this.filter);
     }
 
     handleSearchCustomer() {
@@ -521,16 +529,20 @@ export class CustomerPageComponent implements OnInit {
             permanentAddrDetails: this.cloneCustomerEdit?.permanentAddrDetails,
             identificationDocumentDtls1: this.cloneCustomerEdit?.identificationDocumentDtls1
         }
-        console.log(">>>Check dataUpate:", dataUpdate);
+        // console.log(">>>Check dataUpate:", dataUpdate);
 
         this.loading = true;
         if (this.listDistrictCurrent.length !== 0 && this.listDistrictPermanent.length !== 0 && this.listWardCurrent.length !== 0 && this.listWardPermanent !== 0) {
             let res = await postUpdateCustomer(dataUpdate, cifId);
-            console.log(">>>Check res:", res);
-
+            // console.log(">>>Check res:", res);
             if (res && res?.status === 200) {
                 this.loading = false;
+                console.log("Check filter:", this.filter);
                 modal.close('Save click');
+                await this.fetchListCustomer(0, 10, this.filter);
+                await this.fetchListCustomer(0, 10, this.filter);
+                await this.fetchListCustomer(0, 10, this.filter);
+                console.log(">>>Check list customer:", this.listCustomers);
             } else {
                 let message = res?.data?.message;
                 if (message === "Error when update data") {
