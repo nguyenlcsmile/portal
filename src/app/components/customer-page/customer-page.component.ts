@@ -258,6 +258,7 @@ export class CustomerPageComponent implements OnInit {
 
     // View detail customer: Start
     async viewCustomerDetail(cifId: any) {
+        // this.isCheckErrorData = true;
         await this.handleGetDetailCustomer(cifId, 'viewCustomer');
         let encodeCustomer = btoa(unescape(encodeURIComponent(JSON.stringify(this.customerDetail))));
         let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
@@ -428,6 +429,7 @@ export class CustomerPageComponent implements OnInit {
         let res = await getDetailCustomer(cifId);
 
         if (res && res?.status === 200) {
+            this.isCheckErrorData = false;
             this.dataTotal = res?.data;
             this.customerDetail = res?.data?.detail;
             if (action === 'viewCustomer') return;
