@@ -25,10 +25,10 @@ export class CustomerDetailPageComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         this.route.queryParams.subscribe(params => {
-            this.custDetail = JSON.parse(atob(params?.encodeCustomer));
-            this.data = JSON.parse(atob(params?.dataTotal));
+            this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
+            this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
             this.historyUpdate = this.data?.history_update;
-            console.log(">>>Check historyUpdate:", this.historyUpdate);
+            console.log(">>>Check historyUpdate:", this.data);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
