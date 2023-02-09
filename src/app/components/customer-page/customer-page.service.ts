@@ -22,5 +22,9 @@ const postUpdateCustomer = (dataUpdate: any, cif: any) => {
         data: dataUpdate
     });
 }
+// devphq
+const getImageS3 = (selfie: any) => {
+    return axios.get(`/v1/dashboard/customer/get-detail-s3?key=${selfie}`);
+}
 
-export { postListCustomer, getDetailCustomer, getAddressCustomer, postUpdateCustomer };
+export { postListCustomer, getDetailCustomer, getAddressCustomer, postUpdateCustomer, getImageS3 };
