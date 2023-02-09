@@ -256,10 +256,8 @@ export class CustomerPageComponent implements OnInit {
     // View detail customer: Start
     async viewCustomerDetail(cifId: any) {
         await this.handleGetDetailCustomer(cifId, 'viewCustomer');
-        // console.log(">>>Check customerDetail:", this.customerDetail);
-        let encodeCustomer = btoa(unescape(encodeURIComponent(JSON.stringify(this.customerDetail))));
-        let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
-        // console.log(">>>Check datatotal:", encodeDataTotal);
+        let encodeCustomer = btoa(JSON.stringify(this.customerDetail));
+        let encodeDataTotal = btoa(JSON.stringify(this.dataTotal));
         this.router.navigate(['v2/customer-page/detail'], { queryParams: { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } });
     }
     // View detail customer: End
