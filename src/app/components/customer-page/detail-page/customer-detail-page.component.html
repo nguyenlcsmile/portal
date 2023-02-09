@@ -321,7 +321,144 @@
 
                         <div class="tab-pane fade" id="vkyc-documents" role="tabpanel">
                             <!-- VKYC DOCUMENTS: START -->
-                            <div class="row">
+                            <div *ngIf="data.video_kyc" class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4">                                      
+                                            <table class="table table-sm mt-2 mb-4">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>CIF ID</th>
+                                                        <td>{{data.video_kyc.user_id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Reason</th>
+                                                        <td *ngIf="data.detail && data.detail.reason_call_vkyc === 'debit_request'">Total debit transaction > 70 mio VND/month</td>
+                                                        <td *ngIf="data.detail && data.detail.reason_call_vkyc === 'balance_request'">Usuper account balance > 60 mio VND</td>
+                                                        <td *ngIf="!data.detail || (data.detail.reason_call_vkyc !== 'balance_request' && data.detail.reason_call_vkyc !== 'debit_request')">N/A</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Customer Name</th>
+                                                        <td>{{data.video_kyc.customer_name || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>National ID</th>
+                                                        <td>{{data.video_kyc.customer_nid || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>On-board Date</th>
+                                                        <td>{{data.video_kyc.date_onboard || 'N/A'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <table class="table table-sm mt-2 mb-4">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Scheduled Slot</th>
+                                                        <td>{{data.video_kyc.scheduled_slot || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Re-scheduled Slot</th>
+                                                        <td>{{data.video_kyc.re_scheduled_slot || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>VKYC Result</th>
+                                                        <td>{{data.video_kyc.result_kyc || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>VKYC Reason</th>
+                                                        <td>{{data.video_kyc.reason_kyc || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Agent</th>
+                                                        <td>{{data.video_kyc.agent_id || 'N/A'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>   
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <table class="table table-sm mt-2 mb-4">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Audit Status</th>
+                                                        <td>{{data.video_kyc.audit_status || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Audit Reason</th>
+                                                        <td>{{data.video_kyc.audit_reason || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Audit Date</th>
+                                                        <td>{{data.video_kyc.audit_date || 'N/A'}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Auditor</th>
+                                                        <td>{{data.video_kyc.auditor_id || 'N/A'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div *ngIf="data.video_kyc.video_url" class="form-group">
+                                                <label>VKYC Record</label>
+                                                <button *ngIf="!loadVkyc" class="button" (click)="loadFileVkyc()">Load Video</button>
+                                                <div *ngIf="!loadVkyc">
+                                                    <div *ngIf="recordVideo == ''" class="spinner-border text-warning" style="margin: 10% 40%;display: block">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <div *ngIf="recordVideo != ''">
+                                                        <video controls controlsList="nodownload" oncontextmenu="return false;">
+                                                            <source [src]="recordVideo" type="video/webm">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div *ngIf="data.video_kyc.face_captured" class="form-group">
+                                                <label>Face Image Captured</label>
+                                                <div *ngIf="videoImage == ''" class="spinner-border text-warning" style="margin: 10% 40%;display: block">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                <div *ngIf="videoImage != ''">
+                                                    <img class="card-img-top rounded me-1" [src]='videoImage' alt="Unsplash">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>NID Front Captured</label>
+                                                <div *ngIf="videoImageFrontNID == ''" class="spinner-border text-warning" style="margin: 10% 40%;display: block">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                <div *ngIf="videoImageFrontNID != ''">
+                                                    <img class="card-img-top rounded me-1" [src]='videoImageFrontNID' alt="Unsplash">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div *ngIf="data.video_kyc.nid_back_captured" class="form-group">
+                                                <label>NID Back Captured</label>
+                                                <div *ngIf="videoImageBackNID == ''" class="spinner-border text-warning" style="margin: 10% 40%;display: block">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                <div *ngIf="videoImageBackNID != ''">
+                                                    <img class="card-img-top rounded me-1" [src]='videoImageBackNID' alt="Unsplash">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="!data.video_kyc" class="row">
                                 <p>Don't have video KYC.</p>
                             </div>
                             <!-- VKYC DOCUMENTS: END -->
