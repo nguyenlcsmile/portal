@@ -255,9 +255,10 @@ export class CustomerPageComponent implements OnInit {
     // Check status content for page customer: end
 
     // View detail customer: Start
-    async viewCustomerDetail(cifId: any) {
+    async viewCustomerDetail(item: any) {
         // this.isCheckErrorData = true;
-        await this.handleGetDetailCustomer(cifId, 'viewCustomer');
+        await this.handleGetDetailCustomer(item?.cifId, 'viewCustomer');
+        this.dataTotal['accountId'] = item?.accountId;
         let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
 
         // console.log(">>>Check isCheckErrorData", this.isCheckErrorData);
@@ -427,7 +428,7 @@ export class CustomerPageComponent implements OnInit {
         this.loading = true;
         let res = await getDetailCustomer(cifId);
         this.customerDetail = {};
-        
+
         if (res && res?.status === 200) {
             this.isCheckErrorData = false;
             this.dataTotal = res?.data;
@@ -544,9 +545,9 @@ export class CustomerPageComponent implements OnInit {
         if (this.customerDetail?.customerInqRs?.firstName === this.cloneCustomerEdit?.firstName) delete dataUpdate.firstName;
         if (this.customerDetail?.customerInqRs?.middleName === this.cloneCustomerEdit?.middleName) delete dataUpdate.middleName;
         if (this.customerDetail?.customerInqRs?.lastName === this.cloneCustomerEdit?.lastName) delete dataUpdate.lastName;
-        
+
         let onChangeCurrentAddrDetails = true;
-        Object.keys(this.customerDetail?.customerInqRs?.currentAddrDetails).map(key =>{
+        Object.keys(this.customerDetail?.customerInqRs?.currentAddrDetails).map(key => {
             if (this.customerDetail?.customerInqRs?.currentAddrDetails[key] !== this.cloneCustomerEdit?.currentAddrDetails[key]) {
                 onChangeCurrentAddrDetails = false;
             }
@@ -554,7 +555,7 @@ export class CustomerPageComponent implements OnInit {
         if (onChangeCurrentAddrDetails) delete dataUpdate.currentAddrDetails;
 
         let onChangePermanentAddrDetails = true;
-        Object.keys(this.customerDetail?.customerInqRs?.permanentAddrDetails).map(key =>{
+        Object.keys(this.customerDetail?.customerInqRs?.permanentAddrDetails).map(key => {
             if (this.customerDetail?.customerInqRs?.permanentAddrDetails[key] !== this.cloneCustomerEdit?.permanentAddrDetails[key]) {
                 onChangePermanentAddrDetails = false;
             }
@@ -562,7 +563,7 @@ export class CustomerPageComponent implements OnInit {
         if (onChangePermanentAddrDetails) delete dataUpdate.permanentAddrDetails;
 
         let onChangeIdentification = true;
-        Object.keys(this.customerDetail?.customerInqRs?.identificationDocumentDtls1).map(key =>{
+        Object.keys(this.customerDetail?.customerInqRs?.identificationDocumentDtls1).map(key => {
             if (this.customerDetail?.customerInqRs?.identificationDocumentDtls1[key] !== this.cloneCustomerEdit?.identificationDocumentDtls1[key]) {
                 onChangeIdentification = false;
             }
@@ -572,7 +573,7 @@ export class CustomerPageComponent implements OnInit {
         this.cloneCustomerEdit.dob = this.handleConvertFormatDOB('day-week-year', this.cloneCustomerEdit?.dob);
         this.cloneCustomerEdit.identificationDocumentDtls1.expiryDate = this.handleConvertFormatDOB('day-week-year', this.cloneCustomerEdit.identificationDocumentDtls1.expiryDate);
         this.cloneCustomerEdit.identificationDocumentDtls1.issueDate = this.handleConvertFormatDOB('day-week-year', this.cloneCustomerEdit.identificationDocumentDtls1.issueDate);
-        
+
         // console.log(">>>Check dataUpate:", dataUpdate);
         this.loading = true;
         if (this.listDistrictCurrent.length !== 0 && this.listDistrictPermanent.length !== 0 && this.listWardCurrent.length !== 0 && this.listWardPermanent !== 0) {

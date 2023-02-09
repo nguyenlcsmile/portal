@@ -15,10 +15,11 @@ export class CustomerDetailPageComponent implements OnInit {
     public currentStatus: any;
     public historyUpdate: any;
     public data: any;
+    public accountId: any;
 
     // devphq >>>>> Start
     public image: any = '';
-    public imageFrontNID: any = ''; 
+    public imageFrontNID: any = '';
     public imageBackNID: any = '';
     public kycSubmit: any;
     public videoKYC: any;
@@ -51,7 +52,8 @@ export class CustomerDetailPageComponent implements OnInit {
             this.custDetail = this.data?.detail;
             this.kycSubmit = this.data.kyc_submit;
             this.videoKYC = this.data.video_kyc;
-            // console.log(">>>Check custDetail:", this.kycSubmit);
+            this.accountId = this.data?.accountId;
+            console.log(">>>Check accountId:", this.accountId);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
@@ -154,16 +156,16 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // init data for Value AML 
-    initValue(data:any) {
+    initValue(data: any) {
         this.valueBlckList = data?.detail?.riskBlckLst == 'low' ? false : true;
         this.valuePEPList = data?.detail?.riskPEP == 'low' ? false : true;
         this.occupation = this.getOccupation(data?.detail?.customerInqRs?.occuType);
     }
 
     // get Value Occupation
-    getOccupation(type:any) {
+    getOccupation(type: any) {
         let job = '';
-        switch(type) {
+        switch (type) {
             case '00010':
                 job = 'Comercial staff';
                 break;
@@ -276,16 +278,16 @@ export class CustomerDetailPageComponent implements OnInit {
                 }
             }
             if (this.kycSubmit.frontNid) {
-              let res = await getImageS3(this.kycSubmit.frontNid);
-              if (res.data) {
+                let res = await getImageS3(this.kycSubmit.frontNid);
+                if (res.data) {
                     this.imageFrontNID = "data:image/jpeg;base64," + res?.data;
-              }
+                }
             }
             if (this.kycSubmit.backNid) {
-              let res = await getImageS3(this.kycSubmit.frontNid);
-              if (res.data) {
+                let res = await getImageS3(this.kycSubmit.frontNid);
+                if (res.data) {
                     this.imageBackNID = "data:image/jpeg;base64," + res?.data;
-              }
+                }
             }
         }
     }
@@ -317,7 +319,7 @@ export class CustomerDetailPageComponent implements OnInit {
     async loadFileVkyc() {
         // console.log(">>>Check video_kyc:", this.data.video_kyc.video_url);
         this.loadVkyc = true;
-        if (this.data.video_kyc && this.data.video_kyc.video_url){
+        if (this.data.video_kyc && this.data.video_kyc.video_url) {
             let res = await getImageS3(this.data.video_kyc.video_url);
             if (res && res?.status === 200) {
                 this.loadVkyc = false;
