@@ -286,19 +286,19 @@ export class CustomerDetailPageComponent implements OnInit {
         if (this.kycSubmit) {
             if (this.kycSubmit.selfie) {
                 let res = await getImageS3(this.kycSubmit.selfie);
-                if (res.data) {
+                if (JSON.stringify(res?.data) != '{}') {
                     this.image = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.kycSubmit.frontNid) {
                 let res = await getImageS3(this.kycSubmit.frontNid);
-                if (res.data) {
+                if (JSON.stringify(res?.data) != '{}') {
                     this.imageFrontNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.kycSubmit.backNid) {
                 let res = await getImageS3(this.kycSubmit.frontNid);
-                if (res.data) {
+                if (JSON.stringify(res?.data) != '{}') {
                     this.imageBackNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
@@ -309,19 +309,19 @@ export class CustomerDetailPageComponent implements OnInit {
         if (this.videoKYC) {
             if (this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.face_img);
-                if (res.data) {
+                if (JSON.stringify(res?.data) != '{}') {
                     this.videoImage = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.videoKYC.nid_front_captured && this.videoKYC.nid_front_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_front_img);
-                if (res.data) {
+                if (JSON.stringify(res?.data) != '{}') {
                     this.videoImageFrontNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.videoKYC.nid_back_captured && this.videoKYC.nid_back_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_back_img);
-                if (res.data) {
+                if (JSON.stringify(res?.data) != '{}') {
                     this.videoImageBackNID = "data:image/jpeg;base64," + res?.data;
                 }
             }

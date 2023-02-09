@@ -6,22 +6,22 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs pull-right" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#customer-information">Customer Information</a>
+                            <a class="nav-link active" data-bs-toggle="tab" href="#customer-information"><span style="font-size: 17px;">Customer Information</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#kyc-information">KYC Information</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#kyc-information"><span style="font-size: 17px;">KYC Information</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#AML-Classification-Status">AML Classification - Status: Low</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#AML-Classification-Status"><span style="font-size: 17px;">AML Classification - Status: Low</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#register-documents">Registration Documents</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#register-documents"><span style="font-size: 17px;">Registration Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#vkyc-documents">VKYC Documents</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#vkyc-documents"><span style="font-size: 17px;">VKYC Documents</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#card">Card</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#card"><span style="font-size: 17px;">Card</span></a>
                         </li>
                     </ul>
                 </div>
@@ -31,7 +31,7 @@
                             <!-- CUSTOMER INFORMATION: START -->
                             <div class="row">
                                 <div class="col-lg-6">
-                                <table class="table table-sm mt-2 mb-4">
+                                <table class="table table-sm table-striped mt-2 mb-4">
                                     <tbody>
                                     <tr>
                                         <th>Full Name</th>
@@ -77,7 +77,7 @@
                                 </table>
                                 </div>
                                 <div class="col-lg-6">
-                                <table class="table table-sm mt-2 mb-4">
+                                <table class="table table-sm table-striped mt-2 mb-4">
                                     <tbody>
                                     <tr>
                                         <th>CIF</th>
@@ -241,7 +241,7 @@
 
                                     <div class=" mt-4">
                                         <h5 class="card-title mb-0">Changing History</h5>
-                                        <table class="table table-striped" style="width:100%">
+                                        <table class="table" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>User</th>
@@ -254,11 +254,35 @@
                                                     <td>{{items?.user || 'System Init'}}</td>
                                                     <td>{{items?.createdAt}}</td>
                                                     <td>  
-                                                        <div *ngFor="let log of items.logs | keyvalue">
+                                                        <!-- <div *ngFor="let log of items.logs | keyvalue">
                                                             <p style="font-weight: bold;">Field: {{getNameKeyofHisUpdate(log.key)}}</p>
                                                             <p style="font-weight: bold;">New value: {{getNameforFinalRisk(log.value, 'new')}}</p>
                                                             <p style="font-weight: bold;">Old value: {{getNameforFinalRisk(log.value, 'old')}}</p>
-                                                        </div>
+                                                        </div> -->
+
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Field</th>
+                                                                    <th>New value</th>
+                                                                    <th>Old value</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Cao Le Nguyen</td>
+                                                                    <td>Low</td>
+                                                                    <td>High</td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Phan Haing Qui</td>
+                                                                    <td>Low</td>
+                                                                    <td>High</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </td>
                                                 </tr>        
                                             </tbody>
@@ -277,8 +301,8 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Portrait</h5>
                                         </div>
-                                        <div *ngIf="image == '' && kycSubmit == null">
-                                            No Documents
+                                        <div *ngIf="image == '' && kycSubmit == null" class="spinner-border text-warning">
+                                            <!-- No Documents -->
                                             <span class="sr-only">Loading...</span>
                                         </div>
                                         <div *ngIf="image != ''">
@@ -291,8 +315,9 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Front ID</h5>
                                         </div>
-                                        <div *ngIf="imageFrontNID == '' && kycSubmit == null">
-                                            No Documents
+                                        <div *ngIf="imageFrontNID == '' && kycSubmit == null" class="spinner-border text-warning">
+                                            <!-- No Documents -->
+                                            <span class="sr-only">Loading...</span>
                                         </div>
                                         <div *ngIf="imageFrontNID != ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
@@ -304,8 +329,9 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Back ID</h5>
                                         </div>
-                                        <div *ngIf="imageBackNID == '' && kycSubmit == null">
-                                            No Documents
+                                        <div *ngIf="imageBackNID == '' && kycSubmit == null" class="spinner-border text-warning">
+                                            <!-- No Documents -->
+                                            <span class="sr-only">Loading...</span>
                                         </div>
                                         <div *ngIf="imageBackNID != ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
@@ -322,7 +348,7 @@
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-sm-4">                                      
-                                            <table class="table table-sm mt-2 mb-4">
+                                            <table class="table table-sm table-striped mt-2 mb-4">
                                                 <tbody>
                                                     <tr>
                                                         <th>CIF ID</th>
@@ -350,7 +376,7 @@
                                             </table>
                                         </div>
                                         <div class="col-sm-4">
-                                            <table class="table table-sm mt-2 mb-4">
+                                            <table class="table table-sm table-striped mt-2 mb-4">
                                                 <tbody>
                                                     <tr>
                                                         <th>Scheduled Slot</th>
@@ -376,7 +402,7 @@
                                             </table>   
                                         </div>
                                         <div class="col-sm-4">
-                                            <table class="table table-sm mt-2 mb-4">
+                                            <table class="table table-sm table-striped mt-2 mb-4">
                                                 <tbody>
                                                     <tr>
                                                         <th>Audit Status</th>
@@ -408,7 +434,7 @@
                                                 <button *ngIf="!loadVkyc" class="btn btn-primary mx-2 " (click)="loadFileVkyc()">Load Video</button>
                                         
                                                 <div *ngIf="!loadVkyc" class="mt-2">
-                                                    <div *ngIf="recordVideo == ''" class="spinner-border text-warning" style="margin: 10% 40%;display: block">
+                                                    <div *ngIf="recordVideo == ''" class="spinner-border text-warning">
                                                         <span class="sr-only">Loading...</span>
                                                         No Documents
                                                     </div>
@@ -420,8 +446,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="data.video_kyc.video_url == null" class="form-group">
-                                                No Documents
+                                            <div *ngIf="data.video_kyc.video_url == null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -434,8 +461,9 @@
                                                     <img class="card-img-top rounded me-1" [src]='videoImage' alt="Unsplash">
                                                 </div>
                                             </div>
-                                            <div *ngIf="data.video_kyc.face_captured == null" class="form-group">
-                                                No Documents
+                                            <div *ngIf="data.video_kyc.face_captured == null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -448,8 +476,9 @@
                                                     <img class="card-img-top rounded me-1" [src]='videoImageFrontNID' alt="Unsplash">
                                                 </div>
                                             </div>
-                                            <div *ngIf="data.video_kyc.nid_front_captured == null" class="form-group">
-                                                No Documents
+                                            <div *ngIf="data.video_kyc.nid_front_captured == null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -462,8 +491,9 @@
                                                     <img class="card-img-top rounded me-1" [src]='videoImageBackNID' alt="Unsplash">
                                                 </div>
                                             </div>
-                                            <div *ngIf="data.video_kyc.nid_back_captured == null" class="form-group">
-                                                No Documents
+                                            <div *ngIf="data.video_kyc.nid_back_captured == null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
                                     </div>
