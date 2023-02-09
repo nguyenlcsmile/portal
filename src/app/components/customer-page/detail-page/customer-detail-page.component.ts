@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest } from 'rxjs';
 import { getImageS3 } from '../customer-page.service';
 
 @Component({
@@ -16,16 +17,23 @@ export class CustomerDetailPageComponent implements OnInit {
     public data: any;
 
     // devphq >>>>> Start
-    public image: any;
-    public imageFrontNID: any; 
-    public imageBackNID: any;
+    public image: any = '';
+    public imageFrontNID: any = ''; 
+    public imageBackNID: any = '';
     public kycSubmit: any;
     public videoKYC: any;
     public loadVkyc = false;
     public recordVideo: any;
-    public videoImage: any;
-    public videoImageFrontNID: any;
-    public videoImageBackNID: any;
+    public videoImage: any = '';
+    public videoImageFrontNID: any = '';
+    public videoImageBackNID: any = '';
+    public valueList = [
+        { id: true, name: 'Yes' },
+        { id: false, name: 'No' },
+    ];
+    public valueBlckList = false;
+    public valuePEPList = false;
+    public occupation: any = '';
     // devphq >>>>> End
 
     public listURLCustomerPage: any = {
@@ -43,12 +51,13 @@ export class CustomerDetailPageComponent implements OnInit {
             this.custDetail = this.data?.detail;
             this.kycSubmit = this.data.kyc_submit;
             this.videoKYC = this.data.video_kyc;
-            // console.log(">>>Check custDetail:", this.custDetail);
+            // console.log(">>>Check custDetail:", this.kycSubmit);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
 
     ngOnInit(): void {
+        this.initValue(this.data);
         this.getImageS3forDocument();
         this.getImageForVKYC();
     }
@@ -144,6 +153,68 @@ export class CustomerDetailPageComponent implements OnInit {
         }
     }
 
+    // init data for Value AML 
+    initValue(data:any) {
+        this.valueBlckList = data?.detail?.riskBlckLst == 'low' ? false : true;
+        this.valuePEPList = data?.detail?.riskPEP == 'low' ? false : true;
+        this.occupation = this.getOccupation(data?.detail?.customerInqRs?.occuType);
+    }
+
+    // get Value Occupation
+    getOccupation(type:any) {
+        let job = '';
+        switch(type) {
+            case '00010':
+                job = 'Comercial staff';
+                break;
+            case '00015':
+                job = 'Consumer good self-employed';
+                break;
+            case '00012':
+                job = 'Fashion self-employed';
+                break;
+            case '00006':
+                job = 'Freelancer';
+                break;
+            case '00002':
+                job = 'Military';
+                break;
+            case '00003':
+                job = 'Police';
+                break;
+            case '00009':
+                job = 'Production staff';
+                break;
+            case '00007':
+                job = 'Retired';
+                break;
+            case '00005':
+                job = 'Student';
+                break;
+            case '00004':
+                job = 'Teacher';
+                break;
+            case '00011':
+                job = 'Telecom staff';
+                break;
+            case '00014':
+                job = 'Electronic self-employed';
+                break;
+            case '00001':
+                job = 'Doctor';
+                break;
+            case '00013':
+                job = 'Material self-employed';
+                break;
+            case '00008':
+                job = 'Bank staff';
+                break;
+            default:
+                job = 'N/A';
+        }
+        return job;
+    }
+
     // Set color for AML
     setColor(value: any) {
         if (value) {
@@ -196,19 +267,25 @@ export class CustomerDetailPageComponent implements OnInit {
 
     // get Image
     async getImageS3forDocument() {
-        // console.log("ChecK data for get Image>>>", data);
+        // console.log("ChecK data for get Image>>>", this.image);
         if (this.kycSubmit) {
             if (this.kycSubmit.selfie) {
                 let res = await getImageS3(this.kycSubmit.selfie);
-                this.image = "data:image/jpeg;base64," + res?.data;
+                if (res.data) {
+                    this.image = "data:image/jpeg;base64," + res?.data;
+                }
             }
             if (this.kycSubmit.frontNid) {
               let res = await getImageS3(this.kycSubmit.frontNid);
-              this.imageFrontNID = "data:image/jpeg;base64," + res?.data;
+              if (res.data) {
+                    this.imageFrontNID = "data:image/jpeg;base64," + res?.data;
+              }
             }
             if (this.kycSubmit.backNid) {
               let res = await getImageS3(this.kycSubmit.frontNid);
-              this.imageBackNID = "data:image/jpeg;base64," + res?.data;
+              if (res.data) {
+                    this.imageBackNID = "data:image/jpeg;base64," + res?.data;
+              }
             }
         }
     }
@@ -217,15 +294,21 @@ export class CustomerDetailPageComponent implements OnInit {
         if (this.videoKYC) {
             if (this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.face_img);
-                this.videoImage = "data:image/jpeg;base64," + res?.data;
+                if (res.data) {
+                    this.videoImage = "data:image/jpeg;base64," + res?.data;
+                }
             }
             if (this.videoKYC.nid_front_captured && this.videoKYC.nid_front_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_front_img);
-                this.videoImageFrontNID = "data:image/jpeg;base64," + res?.data;
+                if (res.data) {
+                    this.videoImageFrontNID = "data:image/jpeg;base64," + res?.data;
+                }
             }
             if (this.videoKYC.nid_back_captured && this.videoKYC.nid_back_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_back_img);
-                this.videoImageBackNID = "data:image/jpeg;base64," + res?.data;
+                if (res.data) {
+                    this.videoImageBackNID = "data:image/jpeg;base64," + res?.data;
+                }
             }
         }
     }

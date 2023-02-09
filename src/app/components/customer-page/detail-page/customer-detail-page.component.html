@@ -168,10 +168,8 @@
                                                 <td>
                                                     <div class="row">
                                                         <div class="input-group">
-                                                        <select class="form-select form-select-value" disabled>
-                                                            <option>Select...</option>
-                                                            <option>Yes</option>
-                                                            <option>No</option>
+                                                        <select [(ngModel)]="valueBlckList"  class="form-select form-select-value" disabled>
+                                                            <option *ngFor="let item of valueList" [ngValue]="item.id">{{item.name}}</option>
                                                         </select>
                                                         </div>
                                                     </div>
@@ -193,11 +191,9 @@
                                                 <td>
                                                     <div class="row">
                                                         <div class="input-group">
-                                                        <select class="form-select form-select-value" disabled>
-                                                            <option>Select...</option>
-                                                            <option>Yes</option>
-                                                            <option>No</option>
-                                                        </select>
+                                                            <select [(ngModel)]="valuePEPList"  class="form-select form-select-value" disabled>
+                                                                <option *ngFor="let item of valueList" [ngValue]="item.id">{{item.name}}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -205,7 +201,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="d-none d-xl-table-cell">Occupation</th>
-                                                <td>...</td>
+                                                <td>{{ occupation }}</td>
                                                 <td><span class="text-uppercase" [class]="setColor(custDetail?.riskOccu)">{{custDetail?.riskOccu}}</span></td>
                                             </tr>
                                             <tr>
@@ -281,8 +277,9 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Portrait</h5>
                                         </div>
-                                        <div *ngIf="image == '' && kycSubmit">
-                                            <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        <div *ngIf="image == '' && kycSubmit == null">
+                                            No Documents
+                                            <span class="sr-only">Loading...</span>
                                         </div>
                                         <div *ngIf="image != ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
@@ -294,8 +291,8 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Front ID</h5>
                                         </div>
-                                        <div *ngIf="imageFrontNID == '' && kycSubmit">
-                                            <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        <div *ngIf="imageFrontNID == '' && kycSubmit == null">
+                                            No Documents
                                         </div>
                                         <div *ngIf="imageFrontNID != ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
@@ -307,8 +304,8 @@
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Back ID</h5>
                                         </div>
-                                        <div *ngIf="imageBackNID == '' && kycSubmit">
-                                            <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
+                                        <div *ngIf="imageBackNID == '' && kycSubmit == null">
+                                            No Documents
                                         </div>
                                         <div *ngIf="imageBackNID != ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
@@ -413,6 +410,7 @@
                                                 <div *ngIf="!loadVkyc" class="mt-2">
                                                     <div *ngIf="recordVideo == ''" class="spinner-border text-warning" style="margin: 10% 40%;display: block">
                                                         <span class="sr-only">Loading...</span>
+                                                        No Documents
                                                     </div>
                                                     <div *ngIf="recordVideo != ''">
                                                         <video controls controlsList="nodownload" oncontextmenu="return false;">
@@ -422,38 +420,50 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div *ngIf="data.video_kyc.video_url == null" class="form-group">
+                                                No Documents
+                                            </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div *ngIf="data.video_kyc.face_captured" class="form-group">
                                                 <span class="card-title mb-0">Face Image Captured</span>
                                                 <div *ngIf="videoImage == ''" class="spinner-border text-warning">
-                                                    <span class="sr-only">Loading...</span>
+                                                    <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
                                                 </div>
                                                 <div *ngIf="videoImage != ''">
                                                     <img class="card-img-top rounded me-1" [src]='videoImage' alt="Unsplash">
                                                 </div>
                                             </div>
+                                            <div *ngIf="data.video_kyc.face_captured == null" class="form-group">
+                                                No Documents
+                                            </div>
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="form-group">
+                                            <div *ngIf="data.video_kyc.nid_front_captured" class="form-group">
                                                 <span class="card-title mb-0">NID Front Captured</span>
                                                 <div *ngIf="videoImageFrontNID == ''" class="spinner-border text-warning">
-                                                    <span class="sr-only">Loading...</span>
+                                                    <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
                                                 </div>
                                                 <div *ngIf="videoImageFrontNID != ''">
                                                     <img class="card-img-top rounded me-1" [src]='videoImageFrontNID' alt="Unsplash">
                                                 </div>
+                                            </div>
+                                            <div *ngIf="data.video_kyc.nid_front_captured == null" class="form-group">
+                                                No Documents
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div *ngIf="data.video_kyc.nid_back_captured" class="form-group">
                                                 <span class="card-title mb-0">NID Back Captured</span>
                                                 <div *ngIf="videoImageBackNID == ''" class="spinner-border text-warning">
-                                                    <span class="sr-only">Loading...</span>
+                                                    <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
                                                 </div>
                                                 <div *ngIf="videoImageBackNID != ''">
                                                     <img class="card-img-top rounded me-1" [src]='videoImageBackNID' alt="Unsplash">
                                                 </div>
+                                            </div>
+                                            <div *ngIf="data.video_kyc.nid_back_captured == null" class="form-group">
+                                                No Documents
                                             </div>
                                         </div>
                                     </div>
