@@ -535,6 +535,7 @@ export class CustomerPageComponent implements OnInit {
                 let message = res?.data?.message;
                 if (message === "Error when update data") {
                     this.loading = false;
+                    this.isCheckEmpty = true;
                 }
             }
         } else {

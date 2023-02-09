@@ -35,7 +35,7 @@ export class CustomerDetailPageComponent implements OnInit {
             this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
             this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
             this.historyUpdate = this.data?.history_update;
-            console.log(">>>Check historyUpdate:", this.data);
+            // console.log(">>>Check historyUpdate:", this.data);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
@@ -188,7 +188,7 @@ export class CustomerDetailPageComponent implements OnInit {
 
     // get Image
     async getImageS3forDocument(data:any){
-        console.log("ChecK data for get Image>>>", data);
+        // console.log("ChecK data for get Image>>>", data);
         this.kycSubmit = data.kyc_submit;
         if(this.kycSubmit){
             if(this.kycSubmit.selfie){
