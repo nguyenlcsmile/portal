@@ -59,7 +59,7 @@ export class CustomerPageComponent implements OnInit {
     }
 
     public filter: any = {
-        cif: '555311536', customerId: null, customerName: null, phoneNumber: null, email: null,
+        cif: null, customerId: null, customerName: null, phoneNumber: null, email: null,
         kyc_type: null, diffRisk: null, finalRisk: null, segment: null, subsegment: null,
         dob: null
     };
@@ -263,7 +263,6 @@ export class CustomerPageComponent implements OnInit {
         // console.log(">>>Check isCheckErrorData", this.isCheckErrorData);
         this.loading = false;
         if (this.isCheckErrorData === false) {
-            // this.router.navigate(['v2/customer-page/detail', { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } ]);
             this.router.navigate(['v2/customer-page/detail'], { queryParams: { dataTotal: encodeDataTotal } });
         }
     }
@@ -273,6 +272,8 @@ export class CustomerPageComponent implements OnInit {
         // console.log(">>>Check edit customer:", item);
         this.customerEdit = item;
         this.isCheckErrorData = false;
+        this.isCheckEmpty = false;
+        this.isCheckUpdateData = false;
         await this.handleGetDetailCustomer(item.cifId, 'editCustomer');
         this.loading = false;
         // console.log(">>>Check detail customer:", this.customerDetail);
@@ -580,6 +581,8 @@ export class CustomerPageComponent implements OnInit {
                 this.loading = false;
                 // console.log("Check filter:", this.filter);
                 modal.close('Save click');
+                await this.fetchListCustomer(0, 10, this.filter);
+                await this.fetchListCustomer(0, 10, this.filter);
                 await this.fetchListCustomer(0, 10, this.filter);
                 await this.fetchListCustomer(0, 10, this.filter);
                 await this.fetchListCustomer(0, 10, this.filter);
