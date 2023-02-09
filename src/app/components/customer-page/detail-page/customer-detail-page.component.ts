@@ -20,6 +20,12 @@ export class CustomerDetailPageComponent implements OnInit {
     public imageFrontNID: any; 
     public imageBackNID: any;
     public kycSubmit: any;
+    public videoKYC: any;
+    public loadVkyc = false;
+    public recordVideo: any;
+    public videoImage: any;
+    public videoImageFrontNID: any;
+    public videoImageBackNID: any;
     // devphq >>>>> End
 
     public listURLCustomerPage: any = {
@@ -35,7 +41,7 @@ export class CustomerDetailPageComponent implements OnInit {
             this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
             this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
             this.historyUpdate = this.data?.history_update;
-            console.log(">>>Check historyUpdate:", this.data);
+            // console.log(">>>Check historyUpdate:", this.data);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
@@ -188,21 +194,48 @@ export class CustomerDetailPageComponent implements OnInit {
 
     // get Image
     async getImageS3forDocument(data:any){
-        console.log("ChecK data for get Image>>>", data);
-        this.kycSubmit = data.kyc_submit;
+        // console.log("ChecK data for get Image>>>", data);
+        this.kycSubmit = data?.kyc_submit;
+        this.videoKYC = data?.video_kyc;
         if(this.kycSubmit){
             if(this.kycSubmit.selfie){
                 let res = await getImageS3(this.kycSubmit.selfie);
-                this.image = "data:image/jpeg;base64," + res.data;
+                this.image = "data:image/jpeg;base64," + res?.data;
             }
             if (this.kycSubmit.frontNid) {
               let res = await getImageS3(this.kycSubmit.frontNid);
-              this.imageFrontNID = "data:image/jpeg;base64," + res.data;
+              this.imageFrontNID = "data:image/jpeg;base64," + res?.data;
             }
             if (this.kycSubmit.backNid) {
               let res = await getImageS3(this.kycSubmit.frontNid);
-              this.imageBackNID = "data:image/jpeg;base64," + res.data;
+              this.imageBackNID = "data:image/jpeg;base64," + res?.data;
             }
+        }
+        if(this.videoKYC){
+            if(this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes'){
+                let res = await getImageS3(this.videoKYC.face_img);
+                this.videoImage = "data:image/jpeg;base64," + res?.data;
+            }
+            if(this.videoKYC.nid_front_captured && this.videoKYC.nid_front_captured == 'Yes'){
+                let res = await getImageS3(this.videoKYC.nid_front_img);
+                this.videoImageFrontNID = "data:image/jpeg;base64," + res?.data;
+            }
+            if(this.videoKYC.nid_back_captured && this.videoKYC.nid_back_captured == 'Yes'){
+                let res = await getImageS3(this.videoKYC.nid_back_img);
+                this.videoImageBackNID = "data:image/jpeg;base64," + res?.data;
+            }
+        }
+    }
+
+    // load file video kyc
+    async loadFileVkyc(){
+        console.log("Qui Check >>>>")
+        this.loadVkyc = true;
+        if(this.data.video_kyc && this.data.video_kyc.video_url){
+            let res:any;
+            res = await getImageS3(this.kycSubmit.video_url);
+            let decode_url = atob(res?.data);
+            this.recordVideo = decode_url.split('|')[1];
         }
     }
 }
