@@ -426,7 +426,8 @@ export class CustomerPageComponent implements OnInit {
     async handleGetDetailCustomer(cifId: any, action: string) {
         this.loading = true;
         let res = await getDetailCustomer(cifId);
-
+        this.customerDetail = {};
+        
         if (res && res?.status === 200) {
             this.isCheckErrorData = false;
             this.dataTotal = res?.data;
