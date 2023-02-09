@@ -56,11 +56,10 @@ export class CustomerPageComponent implements OnInit {
 
     public listURLCustomerPage: any = {
         'detail': false,
-        'card': false
     }
 
     public filter: any = {
-        cif: null, customerId: null, customerName: null, phoneNumber: null, email: null,
+        cif: '555311536', customerId: null, customerName: null, phoneNumber: null, email: null,
         kyc_type: null, diffRisk: null, finalRisk: null, segment: null, subsegment: null,
         dob: null
     };
@@ -287,15 +286,15 @@ export class CustomerPageComponent implements OnInit {
 
         // Get detail info customer: start
         this.cloneCustomerEdit.dob = this.customerDetail?.customerInqRs?.dob;
-        this.cloneCustomerEdit['fullName'] = this.customerDetail?.fullName;
-        this.cloneCustomerEdit['firstName'] = this.customerDetail?.customerInqRs?.firstName;
-        this.cloneCustomerEdit['middleName'] = this.customerDetail?.customerInqRs?.middleName;
-        this.cloneCustomerEdit['lastName'] = this.customerDetail?.customerInqRs?.lastName;
-        this.cloneCustomerEdit['phoneNo'] = this.customerDetail?.customerInqRs?.phoneNo;
-        this.cloneCustomerEdit['gender'] = this.customerDetail?.customerInqRs?.gender;
-        this.cloneCustomerEdit['currentAddrDetails'] = this.customerDetail?.customerInqRs?.currentAddrDetails;
-        this.cloneCustomerEdit['permanentAddrDetails'] = this.customerDetail?.customerInqRs?.permanentAddrDetails;
-        this.cloneCustomerEdit['identificationDocumentDtls1'] = this.customerDetail?.customerInqRs?.identificationDocumentDtls1;
+        this.cloneCustomerEdit['fullName'] = _.cloneDeep(this.customerDetail?.fullName);
+        this.cloneCustomerEdit['firstName'] = _.cloneDeep(this.customerDetail?.customerInqRs?.firstName);
+        this.cloneCustomerEdit['middleName'] = _.cloneDeep(this.customerDetail?.customerInqRs?.middleName);
+        this.cloneCustomerEdit['lastName'] = _.cloneDeep(this.customerDetail?.customerInqRs?.lastName);
+        this.cloneCustomerEdit['phoneNo'] = _.cloneDeep(this.customerDetail?.customerInqRs?.phoneNo);
+        this.cloneCustomerEdit['gender'] = _.cloneDeep(this.customerDetail?.customerInqRs?.gender);
+        this.cloneCustomerEdit['currentAddrDetails'] = _.cloneDeep(this.customerDetail?.customerInqRs?.currentAddrDetails);
+        this.cloneCustomerEdit['permanentAddrDetails'] = _.cloneDeep(this.customerDetail?.customerInqRs?.permanentAddrDetails);
+        this.cloneCustomerEdit['identificationDocumentDtls1'] = _.cloneDeep(this.customerDetail?.customerInqRs?.identificationDocumentDtls1);
         // Get detail info customer: end
 
         // Processing format time: START
@@ -525,6 +524,7 @@ export class CustomerPageComponent implements OnInit {
         // Change date identification: end
 
         let cifId = this.cloneCustomerEdit?.cifId;
+
         let dataUpdate = {
             gender: this.cloneCustomerEdit?.gender,
             dob: this.cloneCustomerEdit?.dob,
@@ -535,8 +535,43 @@ export class CustomerPageComponent implements OnInit {
             permanentAddrDetails: this.cloneCustomerEdit?.permanentAddrDetails,
             identificationDocumentDtls1: this.cloneCustomerEdit?.identificationDocumentDtls1
         }
-        // console.log(">>>Check dataUpate:", dataUpdate);
 
+        // Check field change
+        if (this.customerDetail?.customerInqRs?.gender === this.cloneCustomerEdit?.gender) delete dataUpdate.gender;
+        if (this.customerDetail?.customerInqRs?.dob === this.cloneCustomerEdit?.dob) delete dataUpdate.dob;
+        if (this.customerDetail?.customerInqRs?.firstName === this.cloneCustomerEdit?.firstName) delete dataUpdate.firstName;
+        if (this.customerDetail?.customerInqRs?.middleName === this.cloneCustomerEdit?.middleName) delete dataUpdate.middleName;
+        if (this.customerDetail?.customerInqRs?.lastName === this.cloneCustomerEdit?.lastName) delete dataUpdate.lastName;
+        
+        let onChangeCurrentAddrDetails = true;
+        Object.keys(this.customerDetail?.customerInqRs?.currentAddrDetails).map(key =>{
+            if (this.customerDetail?.customerInqRs?.currentAddrDetails[key] !== this.cloneCustomerEdit?.currentAddrDetails[key]) {
+                onChangeCurrentAddrDetails = false;
+            }
+        })
+        if (onChangeCurrentAddrDetails) delete dataUpdate.currentAddrDetails;
+
+        let onChangePermanentAddrDetails = true;
+        Object.keys(this.customerDetail?.customerInqRs?.permanentAddrDetails).map(key =>{
+            if (this.customerDetail?.customerInqRs?.permanentAddrDetails[key] !== this.cloneCustomerEdit?.permanentAddrDetails[key]) {
+                onChangePermanentAddrDetails = false;
+            }
+        })
+        if (onChangePermanentAddrDetails) delete dataUpdate.permanentAddrDetails;
+
+        let onChangeIdentification = true;
+        Object.keys(this.customerDetail?.customerInqRs?.identificationDocumentDtls1).map(key =>{
+            if (this.customerDetail?.customerInqRs?.identificationDocumentDtls1[key] !== this.cloneCustomerEdit?.identificationDocumentDtls1[key]) {
+                onChangeIdentification = false;
+            }
+        })
+        if (onChangeIdentification) delete dataUpdate.identificationDocumentDtls1;
+
+        this.cloneCustomerEdit.dob = this.handleConvertFormatDOB('day-week-year', this.cloneCustomerEdit?.dob);
+        this.cloneCustomerEdit.identificationDocumentDtls1.expiryDate = this.handleConvertFormatDOB('day-week-year', this.cloneCustomerEdit.identificationDocumentDtls1.expiryDate);
+        this.cloneCustomerEdit.identificationDocumentDtls1.issueDate = this.handleConvertFormatDOB('day-week-year', this.cloneCustomerEdit.identificationDocumentDtls1.issueDate);
+        
+        // console.log(">>>Check dataUpate:", dataUpdate);
         this.loading = true;
         if (this.listDistrictCurrent.length !== 0 && this.listDistrictPermanent.length !== 0 && this.listWardCurrent.length !== 0 && this.listWardPermanent !== 0) {
             let res = await postUpdateCustomer(dataUpdate, cifId);
