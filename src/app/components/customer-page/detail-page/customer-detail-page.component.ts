@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { getImageS3 } from '../customer-page.service';
 
 @Component({
@@ -16,6 +14,7 @@ export class CustomerDetailPageComponent implements OnInit {
     public historyUpdate: any;
     public data: any;
     public accountId: any;
+    public isRoleEdit: any;
 
     // devphq >>>>> Start
     public image: any = '';
@@ -47,15 +46,24 @@ export class CustomerDetailPageComponent implements OnInit {
         private route: ActivatedRoute,
     ) {
         this.route.queryParams.subscribe(params => {
-            // this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
+            this.isRoleEdit = JSON.parse(decodeURIComponent(escape(window.atob(params?.isRoleEdit))));
             this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
             this.custDetail = this.data?.detail;
             this.kycSubmit = this.data.kyc_submit;
             this.videoKYC = this.data.video_kyc;
             this.accountId = this.data?.accountId;
-            console.log(">>>Check accountId:", this.accountId);
+            // console.log(">>>Check isRoleEdit:", this.isRoleEdit);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
+
+        this.router.events.forEach((event) => {
+            if (event instanceof NavigationStart) {
+                if (event.navigationTrigger === 'popstate') {
+                    let enCodeRoleEdit = btoa(unescape(encodeURIComponent(JSON.stringify(this.isRoleEdit))));
+                    this.router.navigate(['v2/customer-page'], { state: { isRoleEdit: enCodeRoleEdit } })
+                }
+            }
+        });
     }
 
     ngOnInit(): void {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { postListCustomer } from './customer-page.service';
 import { Store } from '@ngrx/store';
+import { Location } from '@angular/common';
 import { RoleReducer } from 'src/_store/page.reducer';
 import { FormPageData } from 'src/_store/page.reducer';
 import { ModalDismissReasons, NgbModalConfig, NgbModal, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +26,7 @@ export class CustomerPageComponent implements OnInit {
     // Variable for loading page: End
 
     public isRoleEdit: boolean = false;
+    public encodeIsRoleEdit: any;
 
     public currentPage: number = 1;
     public lastCurrentPage: number = 1;
@@ -147,6 +149,8 @@ export class CustomerPageComponent implements OnInit {
     // 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
+        private location: Location,
         private store: Store<FormPageData>,
         private config: NgbModalConfig,
         private modalService: NgbModal,
@@ -156,6 +160,9 @@ export class CustomerPageComponent implements OnInit {
         this.config.backdrop = 'static';
         this.config.keyboard = false;
         this.config.size = 'xl';
+
+        this.encodeIsRoleEdit = this.location.getState();
+
     }
 
     ngOnDestroy() { }
@@ -165,6 +172,12 @@ export class CustomerPageComponent implements OnInit {
         // Get list province: Start
         this.handleGetListAddressCurrent('province', 0);
         // Get list province: End
+        // console.log(">>>Check encodeIsRoleEdit:", this.encodeIsRoleEdit);
+        // console.log(">>>Check isRoleEdit:", this.encodeIsRoleEdit.isRoleEdit);
+        if (this.encodeIsRoleEdit && this.encodeIsRoleEdit.isRoleEdit) {
+            this.isRoleEdit = JSON.parse(decodeURIComponent(escape(window.atob(this.encodeIsRoleEdit?.isRoleEdit))));
+            if (this.isRoleEdit) this.store.dispatch(handleRoleAction());
+        }
     }
 
     ngAfterViewInit() {
@@ -172,8 +185,13 @@ export class CustomerPageComponent implements OnInit {
     }
 
     ngDoCheck() {
-        // console.log(">>>Check status:", this.status);
         this.checkRouter();
+        // Check role edit
+
+        this.store.select('isEdit').subscribe(res => {
+            this.isRoleEdit = res;
+        })
+
         if (this.lastCurrentPage !== this.currentPage) {
             // console.log("Check last:", this.lastCurrentPage);
             // console.log("Check current:", this.currentPage);
@@ -181,11 +199,6 @@ export class CustomerPageComponent implements OnInit {
             let skip = (this.currentPage - 1) * 10;
             this.fetchListCustomer(skip, 10, this.filter).then(res => res).catch(err => err);
         }
-
-        // Check role edit
-        this.store.select('isEdit').subscribe(res => {
-            this.isRoleEdit = res;
-        })
 
         // Check change address current: Start
         if (this.lastIdCurrentProvince !== this.cloneCustomerEdit?.idCurrentProvince) {
@@ -259,12 +272,13 @@ export class CustomerPageComponent implements OnInit {
         // this.isCheckErrorData = true;
         await this.handleGetDetailCustomer(item?.cifId, 'viewCustomer');
         this.dataTotal['accountId'] = item?.accountId;
+        let enCodeRoleEdit = btoa(unescape(encodeURIComponent(JSON.stringify(this.isRoleEdit))));
         let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
 
         // console.log(">>>Check isCheckErrorData", this.isCheckErrorData);
         this.loading = false;
         if (this.isCheckErrorData === false) {
-            this.router.navigate(['v2/customer-page/detail'], { queryParams: { dataTotal: encodeDataTotal } });
+            this.router.navigate(['v2/customer-page/detail'], { queryParams: { dataTotal: encodeDataTotal, isRoleEdit: enCodeRoleEdit } });
         }
     }
     // View detail customer: End
