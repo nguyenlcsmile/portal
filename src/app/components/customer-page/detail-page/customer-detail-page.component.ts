@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { getImageS3 } from '../customer-page.service';
-import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-detail-page',
@@ -37,22 +36,21 @@ export class CustomerDetailPageComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private location: Location
     ) {
         this.route.queryParams.subscribe(params => {
             // this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
             this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
             this.custDetail = this.data?.detail;
-            this.historyUpdate = this.data?.history_update;
-            console.log(">>>Check custDetail:", this.custDetail);
+            this.kycSubmit = this.data.kyc_submit;
+            this.videoKYC = this.data.video_kyc;
+            // console.log(">>>Check custDetail:", this.custDetail);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
 
     ngOnInit(): void {
-        // this.getDetailCustomer(this.cifId);
-        // this.getImageS3forDocument(this.data);
-        console.log(">>>Check video vkyc:", this.data.kyc_submit.video_url);
+        this.getImageS3forDocument();
+        this.getImageForVKYC();
     }
 
     // For header KYC Information >>>>> Start >>>>>> devquiphan
@@ -197,9 +195,8 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // get Image
-    async getImageS3forDocument(data:any) {
+    async getImageS3forDocument() {
         // console.log("ChecK data for get Image>>>", data);
-        this.kycSubmit = data.kyc_submit;
         if (this.kycSubmit) {
             if (this.kycSubmit.selfie) {
                 let res = await getImageS3(this.kycSubmit.selfie);
@@ -214,6 +211,9 @@ export class CustomerDetailPageComponent implements OnInit {
               this.imageBackNID = "data:image/jpeg;base64," + res?.data;
             }
         }
+    }
+
+    async getImageForVKYC() {
         if (this.videoKYC) {
             if (this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.face_img);
@@ -232,13 +232,15 @@ export class CustomerDetailPageComponent implements OnInit {
 
     // load file video kyc
     async loadFileVkyc() {
-        // console.log("Qui Check >>>>")
+        // console.log(">>>Check video_kyc:", this.data.video_kyc.video_url);
         this.loadVkyc = true;
-        if(this.data.video_kyc && this.data.video_kyc.video_url){
-            let res:any;
-            res = await getImageS3(this.data.video_kyc.video_url);
-            let decode_url = atob(res?.data);
-            this.recordVideo = decode_url.split('|')[1];
+        if (this.data.video_kyc && this.data.video_kyc.video_url){
+            let res = await getImageS3(this.data.video_kyc.video_url);
+            if (res && res?.status === 200) {
+                this.loadVkyc = false;
+                let decode_url = atob(res?.data);
+                this.recordVideo = decode_url.split('|')[1];
+            }
         }
     }
 }
