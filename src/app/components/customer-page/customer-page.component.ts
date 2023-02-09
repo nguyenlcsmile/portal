@@ -259,13 +259,13 @@ export class CustomerPageComponent implements OnInit {
     async viewCustomerDetail(cifId: any) {
         // this.isCheckErrorData = true;
         await this.handleGetDetailCustomer(cifId, 'viewCustomer');
-        let encodeCustomer = btoa(unescape(encodeURIComponent(JSON.stringify(this.customerDetail))));
         let encodeDataTotal = btoa(unescape(encodeURIComponent(JSON.stringify(this.dataTotal))));
 
         // console.log(">>>Check isCheckErrorData", this.isCheckErrorData);
         this.loading = false;
         if (this.isCheckErrorData === false) {
-            this.router.navigate(['v2/customer-page/detail'], { queryParams: { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } });
+            // this.router.navigate(['v2/customer-page/detail', { encodeCustomer: encodeCustomer, dataTotal: encodeDataTotal } ]);
+            this.router.navigate(['v2/customer-page/detail'], { queryParams: { dataTotal: encodeDataTotal } });
         }
     }
     // View detail customer: End

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { getImageS3 } from '../customer-page.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-detail-page',
@@ -36,19 +37,22 @@ export class CustomerDetailPageComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
+        private location: Location
     ) {
         this.route.queryParams.subscribe(params => {
-            this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
+            // this.custDetail = JSON.parse(decodeURIComponent(escape(window.atob(params?.encodeCustomer))));
             this.data = JSON.parse(decodeURIComponent(escape(window.atob(params?.dataTotal))));
+            this.custDetail = this.data?.detail;
             this.historyUpdate = this.data?.history_update;
-            console.log(">>>Check historyUpdate:", this.data);
+            console.log(">>>Check custDetail:", this.custDetail);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
     }
 
     ngOnInit(): void {
         // this.getDetailCustomer(this.cifId);
-        this.getImageS3forDocument(this.data);
+        // this.getImageS3forDocument(this.data);
+        console.log(">>>Check video vkyc:", this.data.kyc_submit.video_url);
     }
 
     // For header KYC Information >>>>> Start >>>>>> devquiphan
@@ -193,11 +197,11 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // get Image
-    async getImageS3forDocument(data:any){
-        console.log("ChecK data for get Image>>>", data);
+    async getImageS3forDocument(data:any) {
+        // console.log("ChecK data for get Image>>>", data);
         this.kycSubmit = data.kyc_submit;
-        if(this.kycSubmit){
-            if(this.kycSubmit.selfie){
+        if (this.kycSubmit) {
+            if (this.kycSubmit.selfie) {
                 let res = await getImageS3(this.kycSubmit.selfie);
                 this.image = "data:image/jpeg;base64," + res?.data;
             }
@@ -210,16 +214,16 @@ export class CustomerDetailPageComponent implements OnInit {
               this.imageBackNID = "data:image/jpeg;base64," + res?.data;
             }
         }
-        if(this.videoKYC){
-            if(this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes'){
+        if (this.videoKYC) {
+            if (this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.face_img);
                 this.videoImage = "data:image/jpeg;base64," + res?.data;
             }
-            if(this.videoKYC.nid_front_captured && this.videoKYC.nid_front_captured == 'Yes'){
+            if (this.videoKYC.nid_front_captured && this.videoKYC.nid_front_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_front_img);
                 this.videoImageFrontNID = "data:image/jpeg;base64," + res?.data;
             }
-            if(this.videoKYC.nid_back_captured && this.videoKYC.nid_back_captured == 'Yes'){
+            if (this.videoKYC.nid_back_captured && this.videoKYC.nid_back_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_back_img);
                 this.videoImageBackNID = "data:image/jpeg;base64," + res?.data;
             }
@@ -227,12 +231,12 @@ export class CustomerDetailPageComponent implements OnInit {
     }
 
     // load file video kyc
-    async loadFileVkyc(){
-        console.log("Qui Check >>>>")
+    async loadFileVkyc() {
+        // console.log("Qui Check >>>>")
         this.loadVkyc = true;
         if(this.data.video_kyc && this.data.video_kyc.video_url){
             let res:any;
-            res = await getImageS3(this.kycSubmit.video_url);
+            res = await getImageS3(this.data.video_kyc.video_url);
             let decode_url = atob(res?.data);
             this.recordVideo = decode_url.split('|')[1];
         }
