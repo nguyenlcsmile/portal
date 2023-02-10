@@ -9,8 +9,8 @@ import { getUserDetail } from '../app.service';
 })
 
 export class SidebarComponent implements OnInit {
-
     public userDetail: any;
+    public isRoleEdit: boolean = false;
 
     statusElementSidebar: any = {
         'monitor-page': '',
@@ -42,9 +42,26 @@ export class SidebarComponent implements OnInit {
         let res = await getUserDetail();
         if (res && res?.status === 200) {
             this.userDetail = res?.data;
-            if (this.userDetail.roles.admin) {
+            if (this.userDetail?.roles?.admin) {
                 this.userDetail.roles.admin = this.userDetail?.roles?.admin[0].toUpperCase() + this.userDetail?.roles?.admin.slice(1);
             }
+
+            let inforCustomer = res?.data?.roles?.app?.customer;
+            // console.log(">>>Check inforCustomer:", inforCustomer);
+            Object.keys(inforCustomer).map(index => {
+                // console.log(inforCustomer[item]);
+                if (inforCustomer[index] === 'edit_info') {
+                    this.isRoleEdit = true;
+                }
+            })
+        }
+    }
+
+    handleNavigate(type: string) {
+        if (type === 'Customer') {
+            let enCodeRoleEdit = btoa(unescape(encodeURIComponent(JSON.stringify(this.isRoleEdit))));
+            this.router.navigate(['v2/customer-page'], { state: { isRoleEdit: enCodeRoleEdit } })
+            return;
         }
     }
 

@@ -22,14 +22,14 @@
                 </div>
             </div>
         </div>
-        <ul class="sidebar-nav">
+        <ul *ngIf="userDetail?.roles?.admin !== null" class="sidebar-nav">
             <li class="sidebar-item {{statusElementSidebar['monitor-page']}}">
                 <a class="sidebar-link" routerLink="v2//monitor-page">
                     <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Monitor</span>
                 </a>
             </li>
-            <li class="sidebar-item {{statusElementSidebar['customer-page']}}">
-                <a class="sidebar-link" routerLink="v2/customer-page">
+            <li class="sidebar-item {{statusElementSidebar['customer-page']}}" (click)="handleNavigate('Customer')">
+                <a class="sidebar-link">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Customer</span>
                 </a>
             </li>
