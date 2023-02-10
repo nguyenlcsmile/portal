@@ -17,10 +17,8 @@
                     <img src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall">
                 </div>
                 <div class="flex-grow-1 ps-2">
-                    <a class="sidebar-user-title" href="#">
-                        Username
-                    </a>
-                    <div class="sidebar-user-subtitle">Admin</div>
+                    <a class="sidebar-user-title" href="#">{{userDetail?.username}}</a>
+                    <div class="sidebar-user-subtitle ">Role: {{userDetail?.roles?.admin}}</div>
                 </div>
             </div>
         </div>
