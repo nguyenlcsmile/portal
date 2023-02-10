@@ -167,7 +167,7 @@
                                             <th [width]="300">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody *ngIf="totalPage !== 0">
                                         <tr *ngFor="let item of listCustomers">
                                             <td>{{item?.cifId}}</td>
                                             <td>{{item?.fullName}}</td>
@@ -196,6 +196,11 @@
                                                 <button (click)="viewCustomerDetail(item)" class="btn btn-primary">View</button>
                                                 <button *ngIf="isRoleEdit === true" (click)="editCustomerDetail(content, item)" class="btn btn-danger mx-1">Edit</button>
                                             </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="totalPage === 0">
+                                        <tr>   
+                                            <td colspan="15"><strong><h5><b><i>Customer not found!</i></b></h5></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
