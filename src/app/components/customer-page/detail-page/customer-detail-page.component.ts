@@ -52,17 +52,12 @@ export class CustomerDetailPageComponent implements OnInit {
             this.kycSubmit = this.data.kyc_submit;
             this.videoKYC = this.data.video_kyc;
             this.accountId = this.data?.accountId;
-            console.log(">>>Check isRoleEdit:", this.isRoleEdit);
+            // console.log(">>>Check isRoleEdit:", this.isRoleEdit);
             this.handleReasonStatusforKYCInfor(this.custDetail);
         })
 
         this.router.events.forEach((event) => {
             if (event instanceof NavigationStart) {
-                // let browserRefresh = !this.router.navigated;
-                // if (browserRefresh) {
-                //     let enCodeRoleEdit = btoa(unescape(encodeURIComponent(JSON.stringify(this.isRoleEdit))));
-                //     this.router.navigate(['v2/customer-page'], { state: { isRoleEdit: enCodeRoleEdit } })
-                // }
                 if (event.navigationTrigger === 'popstate') {
                     let enCodeRoleEdit = btoa(unescape(encodeURIComponent(JSON.stringify(this.isRoleEdit))));
                     this.router.navigate(['v2/customer-page'], { state: { isRoleEdit: enCodeRoleEdit } })
