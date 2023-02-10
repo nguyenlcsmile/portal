@@ -25,7 +25,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-body">
+                <div class="card-body mt-3">
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="customer-information" role="tabpanel">
                             <!-- CUSTOMER INFORMATION: START -->
@@ -268,18 +268,11 @@
                                                                     <th>Old value</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody *ngFor="let log of items.logs | keyvalue">
                                                                 <tr>
-                                                                    <td>Cao Le Nguyen</td>
-                                                                    <td>Low</td>
-                                                                    <td>High</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Phan Haing Qui</td>
-                                                                    <td>Low</td>
-                                                                    <td>High</td>
+                                                                    <td>{{getNameKeyofHisUpdate(log.key)}}</td>
+                                                                    <td>{{getNameforFinalRisk(log.value, 'new')}}</td>
+                                                                    <td>{{getNameforFinalRisk(log.value, 'old')}}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -296,42 +289,48 @@
                         <div class="tab-pane fade" id="register-documents" role="tabpanel">
                             <!-- REGISTRATION DOCUMENTS: START -->
                             <div class="row">
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="card">
+                                <div class="col-12 col-md-6 col-lg-3 text-center">
+                                    <div class="card text-center">
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Portrait</h5>
                                         </div>
-                                        <div *ngIf="image === '' && kycSubmit === null" class="spinner-border text-warning">
-                                            <!-- No Documents -->
-                                            <span class="sr-only">Loading...</span>
+                                        <div class="text-center">
+                                            <div *ngIf="image === '' && kycSubmit === null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
                                         </div>
                                         <div *ngIf="image !== ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-6 col-lg-3 text-center">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Front ID</h5>
                                         </div>
-                                        <div *ngIf="imageFrontNID === '' && kycSubmit === null" class="spinner-border text-warning">
-                                            <!-- No Documents -->
-                                            <span class="sr-only">Loading...</span>
+                                        <div class="text-center">
+                                            <div *ngIf="imageFrontNID === '' && kycSubmit === null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
                                         </div>
                                         <div *ngIf="imageFrontNID !== ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-6 col-lg-3 text-center">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Back ID</h5>
                                         </div>
-                                        <div *ngIf="imageBackNID === '' && kycSubmit === null" class="spinner-border text-warning">
-                                            <!-- No Documents -->
-                                            <span class="sr-only">Loading...</span>
+                                        <div class="text-center">
+                                            <div *ngIf="imageBackNID === '' && kycSubmit === null" class="spinner-border text-warning">
+                                                <!-- No Documents -->
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
                                         </div>
                                         <div *ngIf="imageBackNID !== ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
@@ -428,9 +427,11 @@
             
                                 <div class="col-sm-12 mt-2">
                                     <div class="row">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 text-center">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0"><span class="card-title mb-0">VKYC Record</span></h5>
+                                            </div>
                                             <div *ngIf="data.video_kyc.video_url" class="form-group">
-                                                <span class="card-title mb-0">VKYC Record</span>
                                                 <button *ngIf="!loadVkyc" class="btn btn-primary mx-2 " (click)="loadFileVkyc()">Load Video</button>
                                         
                                                 <div *ngIf="!loadVkyc" class="mt-2">
@@ -451,9 +452,11 @@
                                                 <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 text-center">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0"><span class="card-title mb-0">Face Image Captured</span></h5>
+                                            </div>
                                             <div *ngIf="data.video_kyc.face_captured" class="form-group">
-                                                <span class="card-title mb-0">Face Image Captured</span>
                                                 <div *ngIf="videoImage === ''" class="spinner-border text-warning">
                                                     <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
                                                 </div>
@@ -466,9 +469,12 @@
                                                 <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 text-center">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0"><span class="card-title mb-0">NID Front Captured</span></h5>
+                                            </div>
                                             <div *ngIf="data.video_kyc.nid_front_captured" class="form-group">
-                                                <span class="card-title mb-0">NID Front Captured</span>
+                                                <!-- <span class="card-title mb-0">NID Front Captured</span> -->
                                                 <div *ngIf="videoImageFrontNID === ''" class="spinner-border text-warning">
                                                     <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
                                                 </div>
@@ -481,9 +487,12 @@
                                                 <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 text-center">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0"><span class="card-title mb-0">NID Back Captured</span></h5>
+                                            </div>
                                             <div *ngIf="data.video_kyc.nid_back_captured" class="form-group">
-                                                <span class="card-title mb-0">NID Back Captured</span>
+                                                <!-- <span class="card-title mb-0">NID Back Captured</span> -->
                                                 <div *ngIf="videoImageBackNID === ''" class="spinner-border text-warning">
                                                     <img class="card-img-top rounded me-1" src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" alt="Unsplash">
                                                 </div>
