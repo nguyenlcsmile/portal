@@ -290,12 +290,12 @@
                             <!-- REGISTRATION DOCUMENTS: START -->
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-3 text-center">
-                                    <div class="card text-center">
+                                    <div *ngIf="kycSubmit !== null" class="card">
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Portrait</h5>
                                         </div>
                                         <div class="text-center">
-                                            <div *ngIf="image === '' && kycSubmit === null" class="spinner-border text-warning">
+                                            <div *ngIf="image === ''" class="spinner-border text-warning">
                                                 <!-- No Documents -->
                                                 <span class="sr-only">Loading...</span>
                                             </div>
@@ -304,14 +304,19 @@
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
                                         </div>
                                     </div>
+                                    <div *ngIf="kycSubmit === null" class="card">
+                                        <h5>
+                                            <i>Not document KYC submit!!!</i>
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3 text-center">
-                                    <div class="card">
+                                    <div *ngIf="kycSubmit !== null" class="card">
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Front ID</h5>
                                         </div>
                                         <div class="text-center">
-                                            <div *ngIf="imageFrontNID === '' && kycSubmit === null" class="spinner-border text-warning">
+                                            <div *ngIf="imageFrontNID === ''" class="spinner-border text-warning">
                                                 <!-- No Documents -->
                                                 <span class="sr-only">Loading...</span>
                                             </div>
@@ -320,14 +325,19 @@
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
                                         </div>
                                     </div>
+                                    <div *ngIf="kycSubmit === null" class="card">
+                                        <h5>
+                                            <i>Not document KYC submit!!!</i>
+                                        </h5>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3 text-center">
-                                    <div class="card">
+                                    <div *ngIf="kycSubmit !== null" class="card">
                                         <div class="card-header">
                                             <h5 class="card-title mb-0">Back ID</h5>
                                         </div>
                                         <div class="text-center">
-                                            <div *ngIf="imageBackNID === '' && kycSubmit === null" class="spinner-border text-warning">
+                                            <div *ngIf="imageBackNID === ''" class="spinner-border text-warning">
                                                 <!-- No Documents -->
                                                 <span class="sr-only">Loading...</span>
                                             </div>
@@ -335,6 +345,11 @@
                                         <div *ngIf="imageBackNID !== ''">
                                             <img class="card-img-top rounded me-1" [src]='image' alt="Unsplash">
                                         </div>
+                                    </div>
+                                    <div *ngIf="kycSubmit === null" class="card">
+                                        <h5>
+                                            <i>Not document KYC submit!!!</i>
+                                        </h5>
                                     </div>
                                 </div>
                             </div>
