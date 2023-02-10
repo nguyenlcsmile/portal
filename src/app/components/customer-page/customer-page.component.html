@@ -120,8 +120,8 @@
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md text-md-end mt-3">
-                                <button (click)="handleSearchCustomer()" class="btn btn-primary col-md-1 mx-2">Search</button>
-                                <button class="btn btn-success" (click)="clearInputSearch()">Clear Field</button>
+                                <button (click)="handleSearchCustomer()" class="btn btn-outline-primary col-md-1 mx-2">Search</button>
+                                <button class="btn btn-outline-success" (click)="clearInputSearch()">Clear Field</button>
                             </div>
                         </div>
                     </div>
@@ -193,8 +193,8 @@
                                             <td>{{item?.subsegment}}</td>
                                             <td>{{item?.accountId}}</td>
                                             <td>
-                                                <button (click)="viewCustomerDetail(item)" class="btn btn-primary">View</button>
-                                                <button *ngIf="isRoleEdit === true" (click)="editCustomerDetail(content, item)" class="btn btn-danger mx-1">Edit</button>
+                                                <button (click)="viewCustomerDetail(item)" class="btn btn-outline-primary">View</button>
+                                                <button *ngIf="isRoleEdit === true" (click)="editCustomerDetail(content, item)" class="btn btn-outline-danger mx-1">Edit</button>
                                             </td>
                                         </tr>
                                     </tbody>
