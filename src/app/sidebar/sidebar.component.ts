@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { getUserDetail } from '../app.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -8,6 +9,9 @@ import { Router } from '@angular/router';
 })
 
 export class SidebarComponent implements OnInit {
+
+    public userDetail: any;
+
     statusElementSidebar: any = {
         'monitor-page': '',
         'customer-page': ''
@@ -17,7 +21,9 @@ export class SidebarComponent implements OnInit {
         private router: Router,
     ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void { 
+        this.checkUserDetail();
+    }
 
     ngDoCheck() {
         let currentUrlName = this.router.url;
@@ -30,5 +36,13 @@ export class SidebarComponent implements OnInit {
             if (currentUrlName.includes(keyName)) this.statusElementSidebar[keyName] = 'active';
         })
         // console.log(">>>Check status sidebar:", this.statusElementSidebar);
+    }
+
+    async checkUserDetail() {
+        let res = await getUserDetail();
+        if (res && res?.status === 200) {
+            this.userDetail = res?.data;
+            this.userDetail.roles.admin = this.userDetail?.roles?.admin[0].toUpperCase() + this.userDetail?.roles?.admin.slice(1);
+        }
     }
 }
