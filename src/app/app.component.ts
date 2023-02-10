@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { Amplify } from "@aws-amplify/core";
 import { Store } from '@ngrx/store';
 import configAppSync from '../aws-exports';
@@ -19,13 +19,22 @@ export class AppComponent {
     public access_token: any;
     public isLoginPage: any = false;
     public isLogin: any;
+    public isCheckRole: any = null;
+    public isCheckRoleGet: any = false;
 
     constructor(
         private router: Router,
         private store: Store<FormPageData>
-    ) { }
+    ) {
+        // this.router.events.subscribe((event) => {
+        //     if (event instanceof NavigationStart) {
+        //         this.isCheckReload = !router.navigated;
+        //         console.log("Check isCheckRole:", this.isCheckRole);
+        //     }
+        // });
+    }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     ngDoCheck() {
         this.store.select('isLogin').subscribe(res => {
@@ -53,7 +62,7 @@ export class AppComponent {
     ngAfterViewInit() {
         if (this.access_token) this.checkUserDetail();
         if (this.isLoginPage) {
-            if (this.isLogin === JSON.stringify('false')) {
+            if (this.isLogin === JSON.stringify('false') ) {
                 this.router.navigate(['v2/home-page']);
                 return;
             } else {
@@ -66,5 +75,9 @@ export class AppComponent {
     async checkUserDetail() {
         let res = await getUserDetail();
         // console.log(">>>Check res:", res);
+        if (res && res?.status === 200) {
+            this.isCheckRole = res?.data?.roles?.admin;
+            this.isCheckRoleGet = true;
+        }
     }
 }
