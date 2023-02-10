@@ -61,7 +61,6 @@ export class AppComponent {
 
     ngAfterViewInit() {
         if (this.access_token) this.checkUserDetail();
-        console.log(this.router.url);
         if (this.isLoginPage) {
             if (this.isLogin === JSON.stringify('false') ) {
                 this.router.navigate(['v2/home-page']);

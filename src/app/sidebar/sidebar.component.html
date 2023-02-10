@@ -17,22 +17,26 @@
                     <img src="https://sso.ubank.vn/ALL/20210303050811/assets/images/image.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall">
                 </div>
                 <div class="flex-grow-1 ps-2">
-                    <a class="sidebar-user-title" href="#">{{userDetail?.username}}</a>
-                    <div class="sidebar-user-subtitle ">Role: {{userDetail?.roles?.admin}}</div>
+                    <a class="sidebar-user-title" routerLink="v2//home-page">{{userDetail?.username}}</a>
+                    <div class="sidebar-user-subtitle">Role: {{userDetail?.roles?.admin}}</div>
                 </div>
             </div>
         </div>
-        <ul *ngIf="userDetail?.roles?.admin !== null" class="sidebar-nav">
-            <li class="sidebar-item {{statusElementSidebar['monitor-page']}}">
-                <a class="sidebar-link" routerLink="v2//monitor-page">
-                    <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Monitor</span>
-                </a>
-            </li>
-            <li class="sidebar-item {{statusElementSidebar['customer-page']}}" (click)="handleNavigate('Customer')">
-                <a class="sidebar-link">
-                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Customer</span>
-                </a>
-            </li>
-        </ul>
+        <div *ngIf="!isRoleUser">
+            <ul class="sidebar-nav">
+                <li class="sidebar-item {{statusElementSidebar['monitor-page']}}">
+                    <a class="sidebar-link" routerLink="v2//monitor-page">
+                        <i class="align-middle" data-feather="monitor"></i>
+                        <span class="align-middle">Monitor</span>
+                    </a>
+                </li>
+                <li class="sidebar-item {{statusElementSidebar['customer-page']}}">
+                    <a class="sidebar-link" (click)="handleNavigate('Customer')">
+                        <i class="align-middle" data-feather="users"></i> 
+                        <span class="align-middle">Customer</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>

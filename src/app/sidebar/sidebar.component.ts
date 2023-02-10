@@ -11,6 +11,7 @@ import { getUserDetail } from '../app.service';
 export class SidebarComponent implements OnInit {
     public userDetail: any;
     public isRoleEdit: boolean = false;
+    public isRoleUser: boolean = false;
 
     statusElementSidebar: any = {
         'monitor-page': '',
@@ -44,10 +45,12 @@ export class SidebarComponent implements OnInit {
             this.userDetail = res?.data;
             if (this.userDetail?.roles?.admin) {
                 this.userDetail.roles.admin = this.userDetail?.roles?.admin[0].toUpperCase() + this.userDetail?.roles?.admin.slice(1);
+            } else {
+                this.isRoleUser = true;
             }
 
             let inforCustomer = res?.data?.roles?.app?.customer;
-            // console.log(">>>Check inforCustomer:", inforCustomer);
+            // console.log(">>>Check inforCustomer:", this.isRoleUser);
             Object.keys(inforCustomer).map(index => {
                 // console.log(inforCustomer[item]);
                 if (inforCustomer[index] === 'edit_info') {
