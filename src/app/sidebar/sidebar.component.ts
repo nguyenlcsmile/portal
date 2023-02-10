@@ -42,7 +42,11 @@ export class SidebarComponent implements OnInit {
         let res = await getUserDetail();
         if (res && res?.status === 200) {
             this.userDetail = res?.data;
-            this.userDetail.roles.admin = this.userDetail?.roles?.admin[0].toUpperCase() + this.userDetail?.roles?.admin.slice(1);
+            if (this.userDetail.roles.admin) {
+                this.userDetail.roles.admin = this.userDetail?.roles?.admin[0].toUpperCase() + this.userDetail?.roles?.admin.slice(1);
+            }
         }
     }
+
+    ngAfterViewInit() {}
 }
