@@ -93,18 +93,18 @@ export class CustomerDetailPageComponent implements OnInit {
                         let sign_casa = custDetail['signCasa'];
                         if (sign_casa == 'yes') {
                             current_status = 'KYC Success - Sign Casa Success';
-                        } else if (sign_casa == 'fail') {
+                        } else if (sign_casa === 'fail') {
                             if (custDetail['reason_fail']) {
                                 let reason_fail = custDetail['reason_fail'];
                                 let reason_detail = 'FAIL OTP';
                                 if (reason_fail) {
                                     let split_reason = reason_fail.split('&')
-                                    if (split_reason[0] == 'failFace') {
+                                    if (split_reason[0] === 'failFace') {
                                         reason_detail = 'FAIL FACE MATCHING';
                                     }
                                 }
                                 current_status = 'KYC Success - Sign Casa is block ' + reason_detail
-                            } else if (sign_casa == 'generate') {
+                            } else if (sign_casa === 'generate') {
                                 current_status = 'KYC Success - Waiting customer sign Casa';
                             } else {
                                 let uuid_kyc = custDetail['uuid_kyc'];
@@ -165,8 +165,8 @@ export class CustomerDetailPageComponent implements OnInit {
 
     // init data for Value AML 
     initValue(data: any) {
-        this.valueBlckList = data?.detail?.riskBlckLst == 'low' ? false : true;
-        this.valuePEPList = data?.detail?.riskPEP == 'low' ? false : true;
+        this.valueBlckList = data?.detail?.riskBlckLst === 'low' ? false : true;
+        this.valuePEPList = data?.detail?.riskPEP === 'low' ? false : true;
         this.occupation = this.getOccupation(data?.detail?.customerInqRs?.occuType);
     }
 
@@ -264,11 +264,11 @@ export class CustomerDetailPageComponent implements OnInit {
     }
     // get Name for Field of History Update
     getNameKeyofHisUpdate(key: any) {
-        if (key == 'riskBlckLst') {
+        if (key === 'riskBlckLst') {
             return 'Black List Risk';
-        } else if (key == 'riskPEP') {
+        } else if (key === 'riskPEP') {
             return 'PEP List Risk';
-        } else if (key == 'finalRisk') {
+        } else if (key === 'finalRisk') {
             return 'Final Risk';
         } else {
             return 'Occupation Risk';
@@ -281,19 +281,19 @@ export class CustomerDetailPageComponent implements OnInit {
         if (this.kycSubmit) {
             if (this.kycSubmit.selfie) {
                 let res = await getImageS3(this.kycSubmit.selfie);
-                if (JSON.stringify(res?.data) != '{}') {
+                if (JSON.stringify(res?.data) !== '{}') {
                     this.image = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.kycSubmit.frontNid) {
                 let res = await getImageS3(this.kycSubmit.frontNid);
-                if (JSON.stringify(res?.data) != '{}') {
+                if (JSON.stringify(res?.data) !== '{}') {
                     this.imageFrontNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.kycSubmit.backNid) {
                 let res = await getImageS3(this.kycSubmit.frontNid);
-                if (JSON.stringify(res?.data) != '{}') {
+                if (JSON.stringify(res?.data) !== '{}') {
                     this.imageBackNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
@@ -304,19 +304,19 @@ export class CustomerDetailPageComponent implements OnInit {
         if (this.videoKYC) {
             if (this.videoKYC.face_captured && this.videoKYC.face_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.face_img);
-                if (JSON.stringify(res?.data) != '{}') {
+                if (JSON.stringify(res?.data) !== '{}') {
                     this.videoImage = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.videoKYC.nid_front_captured && this.videoKYC.nid_front_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_front_img);
-                if (JSON.stringify(res?.data) != '{}') {
+                if (JSON.stringify(res?.data) !== '{}') {
                     this.videoImageFrontNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
             if (this.videoKYC.nid_back_captured && this.videoKYC.nid_back_captured == 'Yes') {
                 let res = await getImageS3(this.videoKYC.nid_back_img);
-                if (JSON.stringify(res?.data) != '{}') {
+                if (JSON.stringify(res?.data) !== '{}') {
                     this.videoImageBackNID = "data:image/jpeg;base64," + res?.data;
                 }
             }
